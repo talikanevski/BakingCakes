@@ -167,10 +167,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mEmptyView.setText(R.string.no_internet);
         }
 
-        // If there is a valid list of movies, then add them to the adapter's
-        // data set. This will trigger the RecyclerView to update.
+        // If there is a valid list of cakes, then add them to the adapter's data set.
+        // This will trigger the RecyclerView to update.
         if (cakes != null && !cakes.isEmpty()) {
-            setupRecyclerView((RecyclerView) recyclerView);
+            updateRecyclerView((RecyclerView) recyclerView, cakes);
             mEmptyView.setVisibility(View.GONE);
         }
     }
@@ -188,5 +188,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new CakeAdapter(this, new ArrayList<Cake>(), mTwoPane));
+    }
+
+    private void updateRecyclerView(@NonNull RecyclerView recyclerView, List<Cake> cakes) {
+        recyclerView.setAdapter(new CakeAdapter(this,  cakes, mTwoPane));
     }
 }
