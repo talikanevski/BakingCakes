@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BakingCakes</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="no_cakes">No Cakes updates available, please reload the app or check after some time.</string>
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
+</resources>
