@@ -2,6 +2,8 @@ package com.example.bakingcakes.Adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.example.bakingcakes.DetailActivity;
 import com.example.bakingcakes.MainActivity;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.R;
@@ -86,15 +89,24 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
 //                Picasso.with(posterImage.getContext())
 //                        .load(currentCakePosterUrl)
 //                        .into(posterImage);
-//                posterImage.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Context context = v.getContext();
-//                        Intent intent = new Intent(context, DetailActivity.class);
-//                        intent.putExtra(DetailActivity.CURRENT_MOVIE, currentMovie);
-//                        context.startActivity(intent);
-//                    }
-//                });
+                posterImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
+                        context.startActivity(intent);
+                    }
+                });
+                cakeName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
+                        context.startActivity(intent);
+                    }
+                });
         }
     }
 

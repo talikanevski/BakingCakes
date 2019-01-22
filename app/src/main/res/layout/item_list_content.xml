@@ -23,4 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
+
+    <!--TODO&#45;&#45; include button "WHATCH" in the middle of the image,-->
+    <!--that plays the introduction video-->
+
+    <!--TODO include a button "Get the recipe" which lead to the recipe-->
+
+
 </android.support.v7.widget.CardView>

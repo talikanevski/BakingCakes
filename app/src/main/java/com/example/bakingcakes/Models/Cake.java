@@ -1,9 +1,12 @@
 package com.example.bakingcakes.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Arrays;
 import java.util.List;
 
-public class Cake { //TODO? implements Parcelable ???
+public class Cake implements Parcelable {
     private int cakeId;
     private String cakeName;
     private List<Ingredient> cakeIngredients = null;
@@ -19,6 +22,25 @@ public class Cake { //TODO? implements Parcelable ???
         this.servings = servings;
         this.cakeImage = cakeImage;
     }
+
+    protected Cake(Parcel in) {
+        cakeId = in.readInt();
+        cakeName = in.readString();
+        servings = in.readString();
+        cakeImage = in.readString();
+    }
+
+    public static final Creator<Cake> CREATOR = new Creator<Cake>() {
+        @Override
+        public Cake createFromParcel(Parcel in) {
+            return new Cake(in);
+        }
+
+        @Override
+        public Cake[] newArray(int size) {
+            return new Cake[size];
+        }
+    };
 
     public int getCakeId() {return cakeId;}
     public String getCakeName() {return cakeName;}
@@ -46,5 +68,18 @@ public class Cake { //TODO? implements Parcelable ???
     }
     public void setCakeImage(String cakeImage) {
         this.cakeImage = cakeImage;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(cakeId);
+        dest.writeString(cakeName);
+        dest.writeString(servings);
+        dest.writeString(cakeImage);
     }
 }
