@@ -28,7 +28,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     public IngredientAdapter(Context context,
                              List<Ingredient> ingredients) {
         this.ingredientList = ingredients;
-        this.mContext = context;//TODO add  boolean mTwoPane;
+        this.mContext = context;//TODO add boolean mTwoPane;
     }
 
     @Override

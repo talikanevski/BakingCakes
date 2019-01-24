@@ -5,7 +5,10 @@ public class Ingredient {
     private String ingredientMeasure;
     private String ingredientName;
 
-    public Ingredient(Double ingredientQuantity, String ingredientMeasure, String ingredientName) {
+    public Ingredient(String ingredientQuantity, String ingredientMeasure, String ingredientName) {
+        this.ingredientQuantity = ingredientQuantity;
+        this.ingredientMeasure = ingredientMeasure;
+        this.ingredientName = ingredientName;
     }
 
     public String setIngredientMeasure(String ingredientMeasure) {

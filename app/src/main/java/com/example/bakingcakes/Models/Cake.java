@@ -14,7 +14,7 @@ public class Cake implements Parcelable {
     private String servings;
     private String cakeImage;
 
-    public Cake(int cakeId, String cakeName, Ingredient[] cakeIngredients, Step[] steps, String servings, String cakeImage) {
+    public Cake(int cakeId, String cakeName, Ingredient cakeIngredients, Step[] steps, String servings, String cakeImage) {
         this.cakeId = cakeId;
         this.cakeName = cakeName;
         this.cakeIngredients = Arrays.asList(cakeIngredients);

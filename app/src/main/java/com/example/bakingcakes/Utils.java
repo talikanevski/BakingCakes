@@ -58,7 +58,7 @@ public final class Utils {
                 servings = result.getString("servings");
 
                 JSONArray ingredients = result.getJSONArray("ingredients");
-                Ingredient[] cakeIngredient = extractIngredientsFromJson(ingredients);
+                Ingredient cakeIngredient = (Ingredient) extractIngredientsFromJson(ingredients);
 
                 JSONArray cakeSteps = result.getJSONArray("steps");
                 Step[] steps = extractStepsFromJson(cakeSteps);
@@ -194,13 +194,13 @@ public final class Utils {
         return extractFeatureFromJson(jsonResponse);
     }
 
-    public static Ingredient[] extractIngredientsFromJson(JSONArray ingredientsArray) throws JSONException {
-
-        Ingredient[] ingredients = new Ingredient[ingredientsArray.length()];
+    public static List<Ingredient> extractIngredientsFromJson(JSONArray ingredientsArray) throws JSONException {
+        /*Create an empty ArrayList that we can start adding cakes to**/
+        List<Ingredient> ingredients = new ArrayList<>();
 
         for (int i = 0; i < ingredientsArray.length(); i++) {
             JSONObject jsonObject = ingredientsArray.getJSONObject(i);
-            Double ingredientQuantity = jsonObject.getDouble("quantity");
+            String ingredientQuantity = jsonObject.getString("quantity");
             String ingredientMeasure = jsonObject.getString("measure");
             String ingredientName = jsonObject.getString("ingredient");
 
@@ -210,7 +210,7 @@ public final class Utils {
             Ingredient ingredient = new Ingredient(ingredientQuantity,
                     ingredientMeasure,
                     ingredientName);
-            ingredients[i] = ingredient;
+            ingredients.add(ingredient);
         }
         return ingredients;
     }
