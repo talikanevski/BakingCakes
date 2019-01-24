@@ -3,23 +3,22 @@ package com.example.bakingcakes.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.json.JSONArray;
-
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Cake implements Parcelable {
     private int cakeId;
     private String cakeName;
-    private List<JSONArray> cakeIngredients = null;
-    private List<JSONArray> steps = null;
+    private List<Ingredient> cakeIngredients = null;
+    private List<Step> steps = null;
     private String servings;
     private String cakeImage;
 
-    public Cake(int cakeId, String cakeName, JSONArray cakeIngredients, JSONArray steps, String servings, String cakeImage) {
+    public Cake(int cakeId, String cakeName, List<Ingredient> cakeIngredients, Step[] steps, String servings, String cakeImage) {
         this.cakeId = cakeId;
         this.cakeName = cakeName;
-        this.cakeIngredients = Arrays.asList(cakeIngredients);
+        this.cakeIngredients = cakeIngredients;
         this.steps = Arrays.asList(steps);
         this.servings = servings;
         this.cakeImage = cakeImage;
@@ -46,10 +45,10 @@ public class Cake implements Parcelable {
 
     public int getCakeId() {return cakeId;}
     public String getCakeName() {return cakeName;}
-    public List<JSONArray> getCakeIngredients() {
+    public List<Ingredient> getCakeIngredients() {
         return cakeIngredients;
     }
-    public List<JSONArray> getSteps() {
+    public List<Step> getSteps() {
         return steps;
     }
     public String getCakeImage() {return cakeImage;}
@@ -59,10 +58,12 @@ public class Cake implements Parcelable {
     public void setCakeName(String cakeName) {
         this.cakeName = cakeName;
     }
-    public void setCakeIngredients(List<JSONArray> cakeIngredients) {
+
+    public void setCakeIngredients(List<Ingredient> cakeIngredients) {
         this.cakeIngredients = cakeIngredients;
     }
-    public void setSteps(List<JSONArray> steps) {
+
+    public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
     public String getServings() {

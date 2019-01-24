@@ -21,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -58,12 +59,13 @@ public final class Utils {
                 servings = result.getString("servings");
 
                 JSONArray ingredients = result.getJSONArray("ingredients");
-//                Ingredient cakeIngredient = (Ingredient) extractIngredientsFromJson(ingredients);
+
+                List<Ingredient> listOfIngredients = extractIngredientsFromJson(ingredients);
 
                 JSONArray cakeSteps = result.getJSONArray("steps");
-//                Step[] steps = extractStepsFromJson(cakeSteps);
-                Cake cake = new Cake(cakeId, cakeName, ingredients, cakeSteps, servings, "");
-//                Cake cake = new Cake(cakeId, cakeName, cakeIngredient, steps, servings, "");
+                Step[] steps = extractStepsFromJson(cakeSteps);
+
+                Cake cake = new Cake(cakeId, cakeName, listOfIngredients, steps, servings, "");
                 cakes.add(cake);
             }
 
@@ -194,8 +196,8 @@ public final class Utils {
         return extractFeatureFromJson(jsonResponse);
     }
 
-    public static List<Ingredient> extractIngredientsFromJson(DetailActivity.Task context, JSONArray ingredientsArray) throws JSONException {
-        /*Create an empty ArrayList that we can start adding ingredients to**/
+    public static List<Ingredient> extractIngredientsFromJson(JSONArray ingredientsArray) throws JSONException {
+        /*Create an empty ArrayList that we can start adding cakes to**/
         List<Ingredient> ingredients = new ArrayList<>();
 
         for (int i = 0; i < ingredientsArray.length(); i++) {
@@ -210,15 +212,14 @@ public final class Utils {
             Ingredient ingredient = new Ingredient(ingredientQuantity,
                     ingredientMeasure,
                     ingredientName);
-
             ingredients.add(ingredient);
         }
         return ingredients;
     }
 
-    public static List<Step> extractStepsFromJson(DetailActivity.Task context, JSONArray stepsArray) throws JSONException {
-        /*Create an empty ArrayList that we can start adding steps to**/
-        List<Step> steps = new ArrayList<>();
+    public static Step[] extractStepsFromJson(JSONArray stepsArray) throws JSONException {
+        Step[] steps = new Step[stepsArray.length()];
+
         for (int i = 0; i < stepsArray.length(); i++) {
             JSONObject jsonObject = stepsArray.getJSONObject(i);
             int stepId = jsonObject.getInt("id");
@@ -233,7 +234,7 @@ public final class Utils {
                     stepVideoUrl,
                     stepThumbnailUrl);
 
-            steps.add(step);
+            steps[i] = step;
         }
         return steps;
     }
