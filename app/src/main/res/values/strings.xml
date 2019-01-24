@@ -4,5 +4,7 @@
     <string name="no_internet">No internet connection</string>
     <string name="no_cakes">No Cakes updates available, please reload the app or check after some time.</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="directions">Get Directions</string>
+    <string name="share_text_for_chooser">Share ingredients for :</string>
 
 </resources>

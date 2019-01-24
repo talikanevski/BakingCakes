@@ -31,7 +31,6 @@ public final class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
     final static String GIVEN_JSON_DATA = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-
     private Utils() {
     }
 

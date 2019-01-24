@@ -1,7 +1,7 @@
 package com.example.bakingcakes.Models;
 
 public class Ingredient {
-    private Double ingredientQuantity;
+    private String ingredientQuantity;
     private String ingredientMeasure;
     private String ingredientName;
 
@@ -26,12 +26,12 @@ public class Ingredient {
         return ingredientName;
     }
 
-    public Double setIngredientQuantity(Double ingredientQuantity) {
+    public String setIngredientQuantity(String ingredientQuantity) {
         this.ingredientQuantity = ingredientQuantity;
         return ingredientQuantity;
     }
 
-    public Double getIngredientQuantity() {
+    public String getIngredientQuantity() {
         return ingredientQuantity;
     }
 }

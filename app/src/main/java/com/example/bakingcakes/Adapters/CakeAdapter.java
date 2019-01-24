@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 
 import com.example.bakingcakes.DetailActivity;
-import com.example.bakingcakes.MainActivity;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.R;
 
@@ -25,30 +24,7 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
     public List<Cake> cakeList;
     Cake currentCake;
     private final boolean mTwoPane;
-    String currentCakePosterUrl; // cake image not from the given JSON
-    String currentCakeName;
-
-    //        private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
-//                if (mTwoPane) {
-//                    Bundle arguments = new Bundle();
-//                    arguments.putString(DetailFragment.ARG_ITEM_ID, item.id);
-//                    DetailFragment fragment = new DetailFragment();
-//                    fragment.setArguments(arguments);
-//                    mParentActivity.getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.item_detail_container, fragment)
-//                            .commit();
-//                } else {
-//                    Context context = view.getContext();
-//                    Intent intent = new Intent(context, DetailActivity.class);
-//                    intent.putExtra(DetailFragment.ARG_ITEM_ID, item.id);
-//
-//                    context.startActivity(intent);
-//                }
-//            }
-//        };
+    String currentCakePosterUrl; // TODO cake image NOT from the given JSON
 
     public CakeAdapter(Context context,
                        List<Cake> cakes,
@@ -62,7 +38,7 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.item_list_content, parent, false);
+                .inflate(R.layout.cake_item_list_content, parent, false);
         return new ViewHolder(view);
     }
 
@@ -114,7 +90,7 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, int position) {
         currentCake = cakeList.get(position);
         holder.cakeName.setText(currentCake.getCakeName());
-//        holder.bind(currentCake);
+        holder.bind(currentCake);
     }
 
     @Override
