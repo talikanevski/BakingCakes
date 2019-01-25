@@ -1,5 +1,9 @@
 package com.example.bakingcakes.Models;
-public class Step {
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Step implements Parcelable {
     private int stepId;
     private String stepShortDescription;
     private String stepDescription;
@@ -14,6 +18,26 @@ public class Step {
         this.stepVideoUrl = stepVideoUrl;
         this.stepThumbnailUrl = stepThumbnailUrl;
     }
+
+    protected Step(Parcel in) {
+        stepId = in.readInt();
+        stepShortDescription = in.readString();
+        stepDescription = in.readString();
+        stepVideoUrl = in.readString();
+        stepThumbnailUrl = in.readString();
+    }
+
+    public static final Creator<Step> CREATOR = new Creator<Step>() {
+        @Override
+        public Step createFromParcel(Parcel in) {
+            return new Step(in);
+        }
+
+        @Override
+        public Step[] newArray(int size) {
+            return new Step[size];
+        }
+    };
 
     public int getStepId() {return stepId;}
     public String getStepShortDescription() {return stepShortDescription;}
@@ -35,5 +59,19 @@ public class Step {
     }
     public void setStepThumbnailUrl(String stepThumbnailUrl) {
         this.stepThumbnailUrl = stepThumbnailUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(stepId);
+        dest.writeString(stepShortDescription);
+        dest.writeString(stepDescription);
+        dest.writeString(stepVideoUrl);
+        dest.writeString(stepThumbnailUrl);
     }
 }

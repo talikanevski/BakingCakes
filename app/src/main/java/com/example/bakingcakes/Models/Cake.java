@@ -29,7 +29,7 @@ public class Cake implements Parcelable {
         servings = in.readString();
         cakeImage = in.readString();
         cakeIngredients = in.readArrayList(Ingredient.class.getClassLoader());
-        //
+        steps = in.readArrayList(Ingredient.class.getClassLoader());
     }
 
     public static final Creator<Cake> CREATOR = new Creator<Cake>() {
