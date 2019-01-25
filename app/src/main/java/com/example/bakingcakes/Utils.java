@@ -61,7 +61,10 @@ public final class Utils {
                 JSONArray ingredients = result.getJSONArray("ingredients");
 
                 List<Ingredient> listOfIngredients = extractIngredientsFromJson(ingredients);
-
+                for (Ingredient ingredient : listOfIngredients)
+                {
+                    // do something with a single ingredient
+                }
                 JSONArray cakeSteps = result.getJSONArray("steps");
                 Step[] steps = extractStepsFromJson(cakeSteps);
 

@@ -39,7 +39,8 @@ public class DetailActivity extends AppCompatActivity {
     TextView cakeName;
     ImageView cakeImage;
     TextView servings;
-    private RecyclerView ingredientList;
+    private RecyclerView ingredientsRecyclerView;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,21 +60,23 @@ public class DetailActivity extends AppCompatActivity {
         servings.setText("Yield: " + currentCake.getServings() + " servings");
         currentCake.getCakeIngredients();
 
-        ingredientList = findViewById(R.id.ingredients_item_list);
+        ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
         assert recyclerView != null;
-        updateRecyclerView((RecyclerView) ingredientList, currentCake.getCakeIngredients());
-//
-//        List<Ingredient> ingredients = null;
-//        try {
-//            ingredients = Utils.extractIngredientsFromJson((JSONArray) currentCake.getCakeIngredients());
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
-//        assert recyclerView != null;
-//        updateRecyclerView((RecyclerView) ingredientsRecyclerView, ingredients);
+//        updateRecyclerView((RecyclerView) ingredientList, currentCake.getCakeIngredients());
+
+
+
+        List<Ingredient> ingredients = null;
+        try {
+            ingredients = Utils.extractIngredientsFromJson((JSONArray) currentCake.getCakeIngredients());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
+        assert recyclerView != null;
+        updateRecyclerView((RecyclerView) ingredientsRecyclerView, ingredients);
 
 
 //        cakeImage = findViewById(R.id.cake_image);
