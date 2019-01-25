@@ -62,17 +62,8 @@ public class DetailActivity extends AppCompatActivity {
 
         ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
         assert recyclerView != null;
-//        updateRecyclerView((RecyclerView) ingredientList, currentCake.getCakeIngredients());
 
-
-
-        List<Ingredient> ingredients = null;
-        try {
-            ingredients = Utils.extractIngredientsFromJson((JSONArray) currentCake.getCakeIngredients());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        List<Ingredient> ingredients = currentCake.getCakeIngredients();
 
         ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
         assert recyclerView != null;

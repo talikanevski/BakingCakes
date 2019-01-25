@@ -28,6 +28,8 @@ public class Cake implements Parcelable {
         cakeName = in.readString();
         servings = in.readString();
         cakeImage = in.readString();
+        cakeIngredients = in.readArrayList(Ingredient.class.getClassLoader());
+        //
     }
 
     public static final Creator<Cake> CREATOR = new Creator<Cake>() {
@@ -42,18 +44,30 @@ public class Cake implements Parcelable {
         }
     };
 
-    public int getCakeId() {return cakeId;}
-    public String getCakeName() {return cakeName;}
+    public int getCakeId() {
+        return cakeId;
+    }
+
+    public String getCakeName() {
+        return cakeName;
+    }
+
     public List<Ingredient> getCakeIngredients() {
         return cakeIngredients;
     }
+
     public List<Step> getSteps() {
         return steps;
     }
-    public String getCakeImage() {return cakeImage;}
+
+    public String getCakeImage() {
+        return cakeImage;
+    }
+
     public void setCakeId(int cakeId) {
         this.cakeId = cakeId;
     }
+
     public void setCakeName(String cakeName) {
         this.cakeName = cakeName;
     }
@@ -66,9 +80,11 @@ public class Cake implements Parcelable {
     public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
+
     public String getServings() {
         return servings;
     }
+
     public void setCakeImage(String cakeImage) {
         this.cakeImage = cakeImage;
     }
@@ -84,5 +100,7 @@ public class Cake implements Parcelable {
         dest.writeString(cakeName);
         dest.writeString(servings);
         dest.writeString(cakeImage);
+        dest.writeList(cakeIngredients);
+        dest.writeList(steps);
     }
 }
