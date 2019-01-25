@@ -48,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.ingredients_item_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+//        setupRecyclerView((RecyclerView) recyclerView);
 
         Intent intent = getIntent();
         currentCake = intent.getParcelableExtra(CURRENT_CAKE);
@@ -57,11 +57,11 @@ public class DetailActivity extends AppCompatActivity {
         cakeName.setText(currentCake.getCakeName());
         servings = findViewById(R.id.servings);
         servings.setText("Yield: " + currentCake.getServings() + " servings");
-        List<Ingredient> ingredients = currentCake.getCakeIngredients();
+        currentCake.getCakeIngredients();
 
         ingredientList = findViewById(R.id.ingredients_item_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) ingredientList);
+        updateRecyclerView((RecyclerView) ingredientList, currentCake.getCakeIngredients());
 //
 //        List<Ingredient> ingredients = null;
 //        try {
@@ -106,7 +106,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void updateRecyclerView(@NonNull RecyclerView recyclerView, List<Ingredient> ingredients) {
-        recyclerView.setAdapter(new IngredientAdapter(this, ingredients));
+         recyclerView.setAdapter(new IngredientAdapter(this, ingredients));
     }
 
 }

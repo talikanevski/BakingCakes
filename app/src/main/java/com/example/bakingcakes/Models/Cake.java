@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Cake implements Parcelable {
@@ -59,8 +58,9 @@ public class Cake implements Parcelable {
         this.cakeName = cakeName;
     }
 
-    public void setCakeIngredients(List<Ingredient> cakeIngredients) {
+    public List<Ingredient> setCakeIngredients(List<Ingredient> cakeIngredients) {
         this.cakeIngredients = cakeIngredients;
+        return cakeIngredients;
     }
 
     public void setSteps(List<Step> steps) {
