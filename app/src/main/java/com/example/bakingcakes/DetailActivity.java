@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.bakingcakes.Adapters.IngredientAdapter;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Ingredient;
@@ -93,6 +96,14 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(i, getString(R.string.share_text_for_chooser) + currentCake.getCakeName()));
             }
         });
+        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.toolbar_layout);
+        collapsingToolbar.setTitle(currentCake.getCakeName());
+        loadBackdrop();
+    }
+
+    private void loadBackdrop() {
+        final ImageView imageView = findViewById(R.id.backdrop);
+        Glide.with(this).load(currentCake.getCakeImage()).apply(RequestOptions.centerCropTransform()).into(imageView);
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {

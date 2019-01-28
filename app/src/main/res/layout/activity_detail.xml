@@ -11,7 +11,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar"
@@ -30,6 +30,14 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
+
+                <ImageView
+                    android:id="@+id/backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"
+                    app:layout_collapseMode="parallax" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/detail_toolbar"
@@ -85,10 +93,9 @@
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/item_detail_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintTop_toBottomOf="@id/servings"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/servings">
 
             <FrameLayout
                 android:id="@+id/ingredientsFrameLayout"

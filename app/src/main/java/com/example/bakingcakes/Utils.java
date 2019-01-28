@@ -1,10 +1,9 @@
 package com.example.bakingcakes;
-import android.content.Context;
+
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.bakingcakes.Adapters.IngredientAdapter;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.Models.Step;
@@ -22,7 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,6 +31,13 @@ public final class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
     final static String GIVEN_JSON_DATA = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+    // for some reason in the GIVEN_JSON_DATA we don't have any cake images,
+    // so I've searched in the https://www.pexels.com and have found those:
+    final static String NUTELLA_PIE_URL = "https://www.pexels.com/photo/cake-on-a-white-plate-6277/";
+    final static String BROWNIES_URL = "https://www.pexels.com/photo/chocolate-with-milted-chocolate-on-white-ceramic-plate-45202/";
+    final static String YELLOW_CAKE_URL = "https://www.pexels.com/photo/white-icing-covered-cake-in-bokeh-photography-1721932/";
+    final static String CHEESECAKE = "https://www.pexels.com/photo/cheese-cake-with-strawberry-fruit-1098592/";
+
     private Utils() {
     }
 
@@ -40,7 +45,7 @@ public final class Utils {
         int cakeId;
         String cakeName;
         String servings;
-        String cakeImage;//TODO find an images for the cakes
+        Uri cakeImage;//TODO find an images for the cakes
 
         /*If the JSON string is empty or null, then return early.**/
         if (TextUtils.isEmpty(jsonResponse)) {
@@ -64,14 +69,15 @@ public final class Utils {
                 List<Ingredient> listOfIngredients = extractIngredientsFromJson(ingredients);
 
 
-                for (Ingredient ingredient : listOfIngredients)
-                {
+                for (Ingredient ingredient : listOfIngredients) {
                     // do something with a single ingredient
                 }
                 JSONArray cakeSteps = result.getJSONArray("steps");
                 Step[] steps = extractStepsFromJson(cakeSteps);
 
-                Cake cake = new Cake(cakeId, cakeName, listOfIngredients, steps, servings, "");
+                cakeImage = setUpImage(cakeId);
+
+                Cake cake = new Cake(cakeId, cakeName, listOfIngredients, steps, servings, cakeImage);
                 cakes.add(cake);
             }
 
@@ -81,8 +87,28 @@ public final class Utils {
              // with the message from the exception.**/
             Log.e("Utils", "Problem parsing the news JSON results", e);
         }
-        /* Return the list of movies  **/
+        /* Return the list of cakes  **/
         return cakes;
+    }
+
+    private static Uri setUpImage(int cakeId) {
+
+        Uri imageUrl = Uri.parse("");
+        switch (cakeId) {
+            case 1:
+                imageUrl = Uri.parse(NUTELLA_PIE_URL);
+                return imageUrl;
+            case 2:
+                imageUrl = Uri.parse(BROWNIES_URL);
+                return imageUrl;
+            case 3:
+                imageUrl = Uri.parse(YELLOW_CAKE_URL);
+                return imageUrl;
+            case 4:
+                imageUrl = Uri.parse(CHEESECAKE);
+                return imageUrl;
+        }
+        return imageUrl;
     }
 
     /**
@@ -208,12 +234,9 @@ public final class Utils {
 
         for (int i = 0; i < ingredientsArray.length(); i++) {
             JSONObject jsonObject = ingredientsArray.getJSONObject(i);
-            String ingredientQuantity = jsonObject.getString("quantity");
+            Double ingredientQuantity = jsonObject.getDouble("quantity");
             String ingredientMeasure = jsonObject.getString("measure");
             String ingredientName = jsonObject.getString("ingredient");
-
-            // TODO some of the ingredients don't have a space between a word and a following open paren
-            // TODO test this: ingredientName = ingredientName.replaceAll("(\\S)\\(", "$1 \\(");
 
             Ingredient ingredient = new Ingredient(ingredientQuantity,
                     ingredientMeasure,

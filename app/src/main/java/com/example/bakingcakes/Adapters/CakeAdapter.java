@@ -3,6 +3,7 @@ package com.example.bakingcakes.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.bakingcakes.DetailActivity;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
     public List<Cake> cakeList;
     Cake currentCake;
     private final boolean mTwoPane;
-    String currentCakePosterUrl; // TODO cake image NOT from the given JSON
+    Uri currentCakePosterUrl; // TODO cake image NOT from the given JSON
 
     public CakeAdapter(Context context,
                        List<Cake> cakes,
@@ -51,7 +53,7 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
         ViewHolder(View view) {
             super(view);
             mView = view;
-            posterImage = (ImageView) view.findViewById(R.id.cake_image);
+            posterImage = (ImageView) view.findViewById(R.id.image);
             cakeName = (TextView) view.findViewById(R.id.cake_name);
         }
 
@@ -59,12 +61,11 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
 //            currentCakeName = currentCake.getCakeName();
 //            cakeName.setText(currentCakeName);
 
-//            currentCakePosterUrl = currentCake.getCakeImage();
+            currentCakePosterUrl = currentCake.getCakeImage();
             assert currentCake != null;
-            //TODO
-//                Picasso.with(posterImage.getContext())
-//                        .load(currentCakePosterUrl)
-//                        .into(posterImage);
+            //TODO why it doesn't work?
+            Picasso.get().load(currentCakePosterUrl).into(posterImage);
+
                 posterImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

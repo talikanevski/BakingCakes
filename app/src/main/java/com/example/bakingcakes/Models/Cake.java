@@ -1,5 +1,6 @@
 package com.example.bakingcakes.Models;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -12,9 +13,9 @@ public class Cake implements Parcelable {
     private List<Ingredient> cakeIngredients = null;
     private List<Step> steps = null;
     private String servings;
-    private String cakeImage;
+    private Uri cakeImage;
 
-    public Cake(int cakeId, String cakeName, List<Ingredient> cakeIngredients, Step[] steps, String servings, String cakeImage) {
+    public Cake(int cakeId, String cakeName, List<Ingredient> cakeIngredients, Step[] steps, String servings, Uri cakeImage) {
         this.cakeId = cakeId;
         this.cakeName = cakeName;
         this.cakeIngredients = cakeIngredients;
@@ -27,7 +28,7 @@ public class Cake implements Parcelable {
         cakeId = in.readInt();
         cakeName = in.readString();
         servings = in.readString();
-        cakeImage = in.readString();
+        cakeImage = Uri.parse(in.readString());
         cakeIngredients = in.readArrayList(Ingredient.class.getClassLoader());
         steps = in.readArrayList(Ingredient.class.getClassLoader());
     }
@@ -60,7 +61,7 @@ public class Cake implements Parcelable {
         return steps;
     }
 
-    public String getCakeImage() {
+    public Uri getCakeImage() {
         return cakeImage;
     }
 
@@ -85,7 +86,7 @@ public class Cake implements Parcelable {
         return servings;
     }
 
-    public void setCakeImage(String cakeImage) {
+    public void setCakeImage(Uri cakeImage) {
         this.cakeImage = cakeImage;
     }
 
@@ -99,7 +100,7 @@ public class Cake implements Parcelable {
         dest.writeInt(cakeId);
         dest.writeString(cakeName);
         dest.writeString(servings);
-        dest.writeString(cakeImage);
+        dest.writeString(String.valueOf(cakeImage));
         dest.writeList(cakeIngredients);
         dest.writeList(steps);
     }

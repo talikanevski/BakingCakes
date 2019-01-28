@@ -4,18 +4,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Ingredient implements Parcelable {
-    private String ingredientQuantity;
+    private Double ingredientQuantity;
     private String ingredientMeasure;
     private String ingredientName;
 
-    public Ingredient(String ingredientQuantity, String ingredientMeasure, String ingredientName) {
+    public Ingredient(Double ingredientQuantity, String ingredientMeasure, String ingredientName) {
         this.ingredientQuantity = ingredientQuantity;
         this.ingredientMeasure = ingredientMeasure;
         this.ingredientName = ingredientName;
     }
 
     protected Ingredient(Parcel in) {
-        ingredientQuantity = in.readString();
+        ingredientQuantity = in.readDouble();
         ingredientMeasure = in.readString();
         ingredientName = in.readString();
     }
@@ -50,12 +50,12 @@ public class Ingredient implements Parcelable {
         return ingredientName;
     }
 
-    public String setIngredientQuantity(String ingredientQuantity) {
+    public Double setIngredientQuantity(Double ingredientQuantity) {
         this.ingredientQuantity = ingredientQuantity;
         return ingredientQuantity;
     }
 
-    public String getIngredientQuantity() {
+    public Double getIngredientQuantity() {
         return ingredientQuantity;
     }
 
@@ -66,7 +66,7 @@ public class Ingredient implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(ingredientQuantity);
+        dest.writeDouble(ingredientQuantity);
         dest.writeString(ingredientMeasure);
         dest.writeString(ingredientName);
     }
