@@ -3,7 +3,7 @@ package com.example.bakingcakes.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.example.bakingcakes.DetailActivity;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
     public List<Cake> cakeList;
     Cake currentCake;
     private final boolean mTwoPane;
-    Uri currentCakePosterUrl; // TODO cake image NOT from the given JSON
+    Bitmap bitmap; // TODO cake image NOT from the given JSON
 
     public CakeAdapter(Context context,
                        List<Cake> cakes,
@@ -61,10 +60,10 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
 //            currentCakeName = currentCake.getCakeName();
 //            cakeName.setText(currentCakeName);
 
-            currentCakePosterUrl = currentCake.getCakeImage();
+            bitmap = currentCake.getCakeImage();
             assert currentCake != null;
-            //TODO why it doesn't work?
-            Picasso.get().load(currentCakePosterUrl).into(posterImage);
+
+            posterImage.setImageBitmap(bitmap);
 
                 posterImage.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -7,7 +7,7 @@
 
 
     <!--for item cake card layout-->
-    <dimen name="cake_card_height">200dp</dimen>
+    <dimen name="cake_card_height">250dp</dimen>
     <dimen name="cake_card_horizontal_margin">12dp</dimen>
     <dimen name="cake_card_bottom_margin">24dp</dimen>
     <dimen name="cake_card_cake_name_text_size">30sp</dimen>

@@ -1,5 +1,6 @@
 package com.example.bakingcakes.Models;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -13,9 +14,9 @@ public class Cake implements Parcelable {
     private List<Ingredient> cakeIngredients = null;
     private List<Step> steps = null;
     private String servings;
-    private Uri cakeImage;
+    private Bitmap cakeImage;
 
-    public Cake(int cakeId, String cakeName, List<Ingredient> cakeIngredients, Step[] steps, String servings, Uri cakeImage) {
+    public Cake(int cakeId, String cakeName, List<Ingredient> cakeIngredients, Step[] steps, String servings, Bitmap cakeImage) {
         this.cakeId = cakeId;
         this.cakeName = cakeName;
         this.cakeIngredients = cakeIngredients;
@@ -24,11 +25,10 @@ public class Cake implements Parcelable {
         this.cakeImage = cakeImage;
     }
 
-    protected Cake(Parcel in) {
+    protected Cake(Parcel in) {//Bitmap implements Parcelable by definition
         cakeId = in.readInt();
         cakeName = in.readString();
         servings = in.readString();
-        cakeImage = Uri.parse(in.readString());
         cakeIngredients = in.readArrayList(Ingredient.class.getClassLoader());
         steps = in.readArrayList(Ingredient.class.getClassLoader());
     }
@@ -61,7 +61,7 @@ public class Cake implements Parcelable {
         return steps;
     }
 
-    public Uri getCakeImage() {
+    public Bitmap getCakeImage() {
         return cakeImage;
     }
 
@@ -86,7 +86,7 @@ public class Cake implements Parcelable {
         return servings;
     }
 
-    public void setCakeImage(Uri cakeImage) {
+    public void setCakeImage(Bitmap cakeImage) {
         this.cakeImage = cakeImage;
     }
 
@@ -100,7 +100,7 @@ public class Cake implements Parcelable {
         dest.writeInt(cakeId);
         dest.writeString(cakeName);
         dest.writeString(servings);
-        dest.writeString(String.valueOf(cakeImage));
+//        dest.writeString(String.valueOf(cakeImage));//Bitmap implements Parcelable by definition
         dest.writeList(cakeIngredients);
         dest.writeList(steps);
     }

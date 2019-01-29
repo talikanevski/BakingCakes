@@ -1,5 +1,7 @@
 package com.example.bakingcakes;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,13 +32,17 @@ import java.util.Scanner;
 public final class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
+    //in this project we were given JSON data about 4 recipes of cakes:
     final static String GIVEN_JSON_DATA = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-    // for some reason in the GIVEN_JSON_DATA we don't have any cake images,
+
+    // for some reason in the GIVEN_JSON_DATA we don't have any cake images, 
     // so I've searched in the https://www.pexels.com and have found those:
-    final static String NUTELLA_PIE_URL = "https://www.pexels.com/photo/cake-on-a-white-plate-6277/";
-    final static String BROWNIES_URL = "https://www.pexels.com/photo/chocolate-with-milted-chocolate-on-white-ceramic-plate-45202/";
-    final static String YELLOW_CAKE_URL = "https://www.pexels.com/photo/white-icing-covered-cake-in-bokeh-photography-1721932/";
-    final static String CHEESECAKE = "https://www.pexels.com/photo/cheese-cake-with-strawberry-fruit-1098592/";
+    final static String NUTELLA_PIE_URL = "https://user-images.githubusercontent.com/36941009/51932027-2a75eb80-23b3-11e9-9051-758e51dcd161.jpg";
+    final static String BROWNIES_URL = "https://user-images.githubusercontent.com/36941009/51932238-99534480-23b3-11e9-9cbe-30cc50741b4a.jpeg";
+    final static String CHEESECAKE = "https://user-images.githubusercontent.com/36941009/51932473-18e11380-23b4-11e9-9377-cc32721a7046.jpeg";
+
+    //this one from here: https://unsplash.com/photos/B4QQAYBn8fU :
+    final static String YELLOW_CAKE_URL = "https://user-images.githubusercontent.com/36941009/51933494-4b8c0b80-23b6-11e9-9e69-9f7006270634.jpg";
 
     private Utils() {
     }
@@ -45,7 +51,7 @@ public final class Utils {
         int cakeId;
         String cakeName;
         String servings;
-        Uri cakeImage;//TODO find an images for the cakes
+        String cakeImage;//TODO find an images for the cakes
 
         /*If the JSON string is empty or null, then return early.**/
         if (TextUtils.isEmpty(jsonResponse)) {
@@ -77,7 +83,7 @@ public final class Utils {
 
                 cakeImage = setUpImage(cakeId);
 
-                Cake cake = new Cake(cakeId, cakeName, listOfIngredients, steps, servings, cakeImage);
+                Cake cake = new Cake(cakeId, cakeName, listOfIngredients, steps, servings, convertToBitmapImage(cakeImage));
                 cakes.add(cake);
             }
 
@@ -91,24 +97,43 @@ public final class Utils {
         return cakes;
     }
 
-    private static Uri setUpImage(int cakeId) {
+    private static String setUpImage(int cakeId) {
 
-        Uri imageUrl = Uri.parse("");
+        String imageString = "";
         switch (cakeId) {
             case 1:
-                imageUrl = Uri.parse(NUTELLA_PIE_URL);
-                return imageUrl;
+                imageString =NUTELLA_PIE_URL;
+                return imageString;
             case 2:
-                imageUrl = Uri.parse(BROWNIES_URL);
-                return imageUrl;
+                imageString = BROWNIES_URL;
+                return imageString;
             case 3:
-                imageUrl = Uri.parse(YELLOW_CAKE_URL);
-                return imageUrl;
+                imageString = YELLOW_CAKE_URL;
+                return imageString;
             case 4:
-                imageUrl = Uri.parse(CHEESECAKE);
-                return imageUrl;
+                imageString = CHEESECAKE;
+                return imageString;
         }
-        return imageUrl;
+        return imageString;
+    }
+    /**
+     * method to convert String thumbnail (which holds URL link of the image of the current cake)
+     * to Bitmap of this image
+     * https://stackoverflow.com/questions/6932369/inputstream-from-a-url
+     * https://www.codota.com/code/java/methods/android.graphics.BitmapFactory/decodeStream
+     **/
+    private static Bitmap convertToBitmapImage(String thumbnail) {
+        Bitmap bitmap = null;
+        try {
+            InputStream stream = new URL(thumbnail).openStream();
+            bitmap = BitmapFactory.decodeStream(stream);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("QueryUtils", "Failed to create bitmap", e);
+
+        }
+        return bitmap;
     }
 
     /**
