@@ -4,7 +4,6 @@ package com.example.bakingcakes.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,13 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.example.bakingcakes.DetailActivity;
+import com.example.bakingcakes.Activities.DetailActivity;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.R;
 
 import java.util.List;
-
-import static android.support.v4.content.ContextCompat.startActivity;
 
 public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
 

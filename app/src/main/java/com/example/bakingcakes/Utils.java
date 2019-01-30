@@ -33,7 +33,7 @@ public final class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
     //in this project we were given JSON data about 4 recipes of cakes:
-    final static String GIVEN_JSON_DATA = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+    public final static String GIVEN_JSON_DATA = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
     // for some reason in the GIVEN_JSON_DATA we don't have any cake images, thi final product,
     // so I've searched in the https://www.pexels.com and have found those:

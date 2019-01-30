@@ -13,7 +13,7 @@ import java.util.List;
  * network request to the given URL.
  */
 
-class CakeLoader extends AsyncTaskLoader<List<Cake>> {
+public class CakeLoader extends AsyncTaskLoader<List<Cake>> {
 
     /**
      * Tag for log messages

@@ -1,4 +1,4 @@
-package com.example.bakingcakes;
+package com.example.bakingcakes.Activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,6 +22,7 @@ import com.example.bakingcakes.Adapters.StepsAdapter;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.Models.Step;
+import com.example.bakingcakes.R;
 
 import java.util.List;
 
@@ -67,6 +68,14 @@ public class DetailActivity extends AppCompatActivity {
         stepsRecyclerView = findViewById(R.id.steps_item_list);
         assert recyclerView != null;
         setupRecyclerViewForSteps((RecyclerView) stepsRecyclerView, steps);
+//
+//        FloatingActionButton play = findViewById(R.id.playFab);
+//        play.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         // Setup FAB to share the ingredients of the current cake
         FloatingActionButton fabShare = findViewById(R.id.share_fab);
