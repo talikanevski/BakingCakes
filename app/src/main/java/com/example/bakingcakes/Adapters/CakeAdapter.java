@@ -4,6 +4,7 @@ package com.example.bakingcakes.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.R;
 
 import java.util.List;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
 
@@ -57,8 +60,6 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
         }
 
         void bind(final Cake currentCake) {
-//            currentCakeName = currentCake.getCakeName();
-//            cakeName.setText(currentCakeName);
 
             bitmap = currentCake.getCakeImage();
             assert currentCake != null;
@@ -72,6 +73,9 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
                         Intent intent = new Intent(context, DetailActivity.class);
                         intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
                         context.startActivity(intent);
+//                        Bundle b = new Bundle();
+//                        b.putParcelable("Image", (Parcelable) bitmap); // image is object of Bitmap class. The Bitmap class in Android implements Parcelable
+//                        intent.putExtras(b);
                     }
                 });
                 cakeName.setOnClickListener(new View.OnClickListener() {

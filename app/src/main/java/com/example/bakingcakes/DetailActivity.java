@@ -43,11 +43,9 @@ public class DetailActivity extends AppCompatActivity {
     private View recyclerView;
     private IngredientAdapter adapter;
     public Cake currentCake;
-    TextView cakeName;
-    ImageView cakeImage;
     TextView servings;
     private RecyclerView ingredientsRecyclerView;
-
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,13 +57,10 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView = findViewById(R.id.ingredients_item_list);
         assert recyclerView != null;
-//        setupRecyclerView((RecyclerView) recyclerView);
 
         Intent intent = getIntent();
         currentCake = intent.getParcelableExtra(CURRENT_CAKE);
 
-//        cakeName = findViewById(R.id.cake_name);
-//        cakeName.setText(currentCake.getCakeName());
         servings = findViewById(R.id.servings);
         servings.setText("Yield: " + currentCake.getServings() + " servings");
         currentCake.getCakeIngredients();
@@ -78,15 +73,6 @@ public class DetailActivity extends AppCompatActivity {
         ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
         assert recyclerView != null;
         updateRecyclerView((RecyclerView) ingredientsRecyclerView, ingredients);
-
-
-//        cakeImage = findViewById(R.id.cake_image);
-//        Bitmap bitmap = currentCake.getCakeImage();
-//
-//        cakeImage.setImageBitmap(bitmap);
-////        Picasso.get().
-////                load(currentCake.getCakeImage())
-//////                .into(cakeImage);
 
         // Setup FAB to share the ingredients of the current cake
         FloatingActionButton fabShare = findViewById(R.id.share_fab);
@@ -114,7 +100,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void loadBackdrop() {
         final ImageView imageView = findViewById(R.id.backdrop);
-        Bitmap bitmap = currentCake.getCakeImage();
+        bitmap = currentCake.getCakeImage();
         assert currentCake != null;
         imageView.setImageBitmap(bitmap);
 //        Glide.with(this).load(currentCake.getCakeImage()).apply(RequestOptions.centerCropTransform()).into(imageView);
@@ -125,8 +111,9 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void updateRecyclerView(@NonNull RecyclerView recyclerView, List<Ingredient> ingredients) {
-         recyclerView.setAdapter(new IngredientAdapter(this, ingredients));
+        recyclerView.setAdapter(new IngredientAdapter(this, ingredients));
     }
+
     @Override //Providing Up navigation
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
