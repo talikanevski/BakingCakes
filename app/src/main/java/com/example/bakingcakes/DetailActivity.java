@@ -2,8 +2,6 @@ package com.example.bakingcakes;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,28 +10,19 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.bakingcakes.Adapters.IngredientAdapter;
+import com.example.bakingcakes.Adapters.StepsAdapter;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Ingredient;
-import com.squareup.picasso.Picasso;
+import com.example.bakingcakes.Models.Step;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
@@ -45,6 +34,7 @@ public class DetailActivity extends AppCompatActivity {
     public Cake currentCake;
     TextView servings;
     private RecyclerView ingredientsRecyclerView;
+    private RecyclerView stepsRecyclerView;
     Bitmap bitmap;
 
     @Override
@@ -69,10 +59,14 @@ public class DetailActivity extends AppCompatActivity {
         assert recyclerView != null;
 
         List<Ingredient> ingredients = currentCake.getCakeIngredients();
-
         ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
         assert recyclerView != null;
-        updateRecyclerView((RecyclerView) ingredientsRecyclerView, ingredients);
+        setupRecyclerViewForIngredients((RecyclerView) ingredientsRecyclerView, ingredients);
+
+        List<Step> steps = currentCake.getSteps();
+        stepsRecyclerView = findViewById(R.id.steps_item_list);
+        assert recyclerView != null;
+        setupRecyclerViewForSteps((RecyclerView) stepsRecyclerView, steps);
 
         // Setup FAB to share the ingredients of the current cake
         FloatingActionButton fabShare = findViewById(R.id.share_fab);
@@ -103,15 +97,14 @@ public class DetailActivity extends AppCompatActivity {
         bitmap = currentCake.getCakeImage();
         assert currentCake != null;
         imageView.setImageBitmap(bitmap);
-//        Glide.with(this).load(currentCake.getCakeImage()).apply(RequestOptions.centerCropTransform()).into(imageView);
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new IngredientAdapter(this, new ArrayList<Ingredient>()));
-    }
-
-    private void updateRecyclerView(@NonNull RecyclerView recyclerView, List<Ingredient> ingredients) {
+    private void setupRecyclerViewForIngredients(@NonNull RecyclerView recyclerView, List<Ingredient> ingredients) {
         recyclerView.setAdapter(new IngredientAdapter(this, ingredients));
+    }
+
+    private void setupRecyclerViewForSteps(@NonNull RecyclerView recyclerView, List<Step> steps) {
+        recyclerView.setAdapter(new StepsAdapter(this, steps));
     }
 
     @Override //Providing Up navigation
@@ -124,5 +117,4 @@ public class DetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

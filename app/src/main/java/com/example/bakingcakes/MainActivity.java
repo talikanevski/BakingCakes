@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<Cake>> loader) {
         Log.i(LOG_TAG, "Test:  onLoaderReset called");
 
-        mAdapter.notifyDataSetChanged();
+//        mAdapter.notifyDataSetChanged();
     }
 
     private void reload() {

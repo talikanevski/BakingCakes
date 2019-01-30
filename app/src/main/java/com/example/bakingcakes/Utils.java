@@ -35,7 +35,7 @@ public final class Utils {
     //in this project we were given JSON data about 4 recipes of cakes:
     final static String GIVEN_JSON_DATA = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
-    // for some reason in the GIVEN_JSON_DATA we don't have any cake images, 
+    // for some reason in the GIVEN_JSON_DATA we don't have any cake images, thi final product,
     // so I've searched in the https://www.pexels.com and have found those:
     final static String NUTELLA_PIE_URL = "https://user-images.githubusercontent.com/36941009/51932027-2a75eb80-23b3-11e9-9051-758e51dcd161.jpg";
     final static String BROWNIES_URL = "https://user-images.githubusercontent.com/36941009/51932238-99534480-23b3-11e9-9cbe-30cc50741b4a.jpeg";
@@ -51,7 +51,7 @@ public final class Utils {
         int cakeId;
         String cakeName;
         String servings;
-        String cakeImage;//TODO find an images for the cakes
+        String cakeImage;
 
         /*If the JSON string is empty or null, then return early.**/
         if (TextUtils.isEmpty(jsonResponse)) {
@@ -74,10 +74,6 @@ public final class Utils {
 
                 List<Ingredient> listOfIngredients = extractIngredientsFromJson(ingredients);
 
-
-                for (Ingredient ingredient : listOfIngredients) {
-                    // do something with a single ingredient
-                }
                 JSONArray cakeSteps = result.getJSONArray("steps");
                 Step[] steps = extractStepsFromJson(cakeSteps);
 
