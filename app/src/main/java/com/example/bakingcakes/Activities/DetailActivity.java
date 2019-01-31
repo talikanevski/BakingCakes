@@ -2,6 +2,7 @@ package com.example.bakingcakes.Activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -103,9 +104,17 @@ public class DetailActivity extends AppCompatActivity {
 
     private void loadBackdrop() {
         final ImageView imageView = findViewById(R.id.backdrop);
-        bitmap = currentCake.getCakeImage();
+
+        //retrieve the Bitmap from the intent
+        Bitmap bmp;
+
+        byte[] byteArray = getIntent().getByteArrayExtra("image");
+        bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+
+//        bitmap = currentCake.getCakeImage();
         assert currentCake != null;
-        imageView.setImageBitmap(bitmap);
+        imageView.setImageBitmap(bmp);
     }
 
     private void setupRecyclerViewForIngredients(@NonNull RecyclerView recyclerView, List<Ingredient> ingredients) {

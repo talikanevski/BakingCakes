@@ -17,6 +17,7 @@ import com.example.bakingcakes.Activities.DetailActivity;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.R;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
@@ -25,7 +26,7 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
     public List<Cake> cakeList;
     Cake currentCake;
     private final boolean mTwoPane;
-    Bitmap bitmap; // TODO cake image NOT from the given JSON
+    Bitmap bitmap; // cake image NOT from the given JSON
 
     public CakeAdapter(Context context,
                        List<Cake> cakes,
@@ -63,27 +64,33 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
 
             posterImage.setImageBitmap(bitmap);
 
-                posterImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, DetailActivity.class);
-                        intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
-                        context.startActivity(intent);
+            posterImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
+                    //passing Bitmap
+                    ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
+                    byte[] byteArray = bStream.toByteArray();
+                    intent.putExtra("image", byteArray);
+
+                    context.startActivity(intent);
 //                        Bundle b = new Bundle();
 //                        b.putParcelable("Image", (Parcelable) bitmap); // image is object of Bitmap class. The Bitmap class in Android implements Parcelable
 //                        intent.putExtras(b);
-                    }
-                });
-                cakeName.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, DetailActivity.class);
-                        intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
-                        context.startActivity(intent);
-                    }
-                });
+                }
+            });
+            cakeName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

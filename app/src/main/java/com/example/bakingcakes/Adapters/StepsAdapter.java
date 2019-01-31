@@ -1,13 +1,18 @@
 package com.example.bakingcakes.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.bakingcakes.Activities.DetailActivity;
+import com.example.bakingcakes.Fragments.StepFragment;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
@@ -36,6 +41,7 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
         public TextView shortDescription;
+        public RelativeLayout listItem;
 
         public final View mView;
 
@@ -43,6 +49,19 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
             super(view);
             mView = view;
             shortDescription = (TextView) view.findViewById(R.id.tv_step_number_and_short_description);
+            listItem = (RelativeLayout) view.findViewById(R.id.step_list_item);
+        }
+
+        void bind(final Step currentStep) {
+            listItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, StepFragment.class);
+                    intent.putExtra(StepFragment.CURRENT_STEP, (Parcelable) currentStep);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -50,10 +69,12 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
     public void onBindViewHolder(final StepsAdapter.ViewHolder holder, int position) {
         currentStep = stepList.get(position);
         String description = currentStep.getStepShortDescription();
-        if (position == 0){
-        holder.shortDescription.setText(description);} else {
+        if (position == 0) {
+            holder.shortDescription.setText(description);
+        } else {
             holder.shortDescription.setText("Step " + currentStep.getStepId() + ": " + description);
         }
+        holder.bind(currentStep);
     }
 
     @Override

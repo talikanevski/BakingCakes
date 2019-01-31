@@ -37,12 +37,13 @@ public final class Utils {
 
     // for some reason in the GIVEN_JSON_DATA we don't have any cake images, thi final product,
     // so I've searched in the https://www.pexels.com and have found those:
-    final static String NUTELLA_PIE_URL = "https://user-images.githubusercontent.com/36941009/51932027-2a75eb80-23b3-11e9-9051-758e51dcd161.jpg";
-    final static String BROWNIES_URL = "https://user-images.githubusercontent.com/36941009/51932238-99534480-23b3-11e9-9cbe-30cc50741b4a.jpeg";
-    final static String CHEESECAKE = "https://user-images.githubusercontent.com/36941009/51932473-18e11380-23b4-11e9-9377-cc32721a7046.jpeg";
+    final static String NUTELLA_PIE_URL = "https://user-images.githubusercontent.com/36941009/52073866-6b9a0700-253d-11e9-9d97-a55775bc0290.jpg";
+
+    final static String BROWNIES_URL = "https://user-images.githubusercontent.com/36941009/52075659-b1f16500-2541-11e9-8577-c8e4c7d0de59.jpeg";
+    final static String CHEESECAKE = "https://user-images.githubusercontent.com/36941009/52075732-d9483200-2541-11e9-9208-e86d378bc5cd.jpg";
 
     //this one from here: https://unsplash.com/photos/B4QQAYBn8fU :
-    final static String YELLOW_CAKE_URL = "https://user-images.githubusercontent.com/36941009/51933494-4b8c0b80-23b6-11e9-9e69-9f7006270634.jpg";
+    final static String YELLOW_CAKE_URL = "https://user-images.githubusercontent.com/36941009/52075772-f977f100-2541-11e9-8260-1fa604a77ddc.jpg";
 
     private Utils() {
     }
