@@ -71,15 +71,15 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
                     Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
                     //passing Bitmap
+                    bitmap = currentCake.getCakeImage();
+
                     ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
                     byte[] byteArray = bStream.toByteArray();
                     intent.putExtra("image", byteArray);
 
                     context.startActivity(intent);
-//                        Bundle b = new Bundle();
-//                        b.putParcelable("Image", (Parcelable) bitmap); // image is object of Bitmap class. The Bitmap class in Android implements Parcelable
-//                        intent.putExtras(b);
                 }
             });
             cakeName.setOnClickListener(new View.OnClickListener() {

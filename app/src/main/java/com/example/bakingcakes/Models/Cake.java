@@ -31,7 +31,6 @@ public class Cake implements Parcelable {
         servings = in.readString();
         cakeIngredients = in.readArrayList(Ingredient.class.getClassLoader());
         steps = in.readArrayList(Ingredient.class.getClassLoader());
-//        cakeImage = in.readParcelable(Bitmap.class.getClassLoader());
     }
 
     public static final Creator<Cake> CREATOR = new Creator<Cake>() {
@@ -103,6 +102,5 @@ public class Cake implements Parcelable {
         dest.writeString(servings);
         dest.writeList(cakeIngredients);
         dest.writeList(steps);
-//        dest.writeValue(cakeImage);
     }
 }

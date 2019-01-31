@@ -99,7 +99,6 @@ public class DetailActivity extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.toolbar_layout);
         collapsingToolbar.setTitle(currentCake.getCakeName());
         loadBackdrop();
-
     }
 
     private void loadBackdrop() {
@@ -107,12 +106,8 @@ public class DetailActivity extends AppCompatActivity {
 
         //retrieve the Bitmap from the intent
         Bitmap bmp;
-
         byte[] byteArray = getIntent().getByteArrayExtra("image");
         bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-
-
-//        bitmap = currentCake.getCakeImage();
         assert currentCake != null;
         imageView.setImageBitmap(bmp);
     }
