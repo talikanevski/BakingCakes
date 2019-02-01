@@ -7,10 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 //import android.support.v4.media.session.MediaSessionCompat;
 //import android.support.v4.media.session.PlaybackStateCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Step;
@@ -45,14 +49,17 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
     private static final String TAG = StepFragment.class.getSimpleName();
 
-    private SimpleExoPlayerView mPlayerView;
+    private SimpleExoPlayerView exoPlayerView;
     private SimpleExoPlayer exoPlayer;
     private Cake cake;
     public List<Step> stepList;
     private Step step;
     private int stepNumber;
     private long exoPlayerPosition = 0;
-
+    private Button back;
+    private Button forvard;
+    private String cakeName;
+    private TextView description;
 //    private MediaSessionCompat mMediaSession;
 //    private PlaybackStateCompat.Builder mStateBuilder;
 
@@ -63,7 +70,10 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step, container, false);
 
-        mPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.exoPlayerView);
+        exoPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.exoPlayerView);
+        back = rootView.findViewById(R.id.back);
+        forvard = rootView.findViewById(R.id.forward);
+        description = rootView.findViewById(R.id.description);
 
         // Initialize the player.
         initializePlayer();
@@ -83,7 +93,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             exoPlayerPosition = savedInstanceState.getLong(CURRENT_STEP_NUMBER);
         }
 
-        String cakeName = cake.getCakeName();
+        cakeName = cake.getCakeName();
         stepList = cake.getSteps();
 
         setUp(stepNumber);
@@ -92,6 +102,39 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     private void setUp(int stepNumber) {
+        exoPlayer.stop();
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (stepNumber == 0) {
+            back.setVisibility(View.GONE);
+            actionBar.setTitle(cakeName + " - " + step.getStepShortDescription());
+
+        } else {
+            back.setVisibility(View.VISIBLE);
+            actionBar.setTitle(cakeName + "Step " + stepNumber);
+        }
+        if (stepNumber == stepList.size() - 1) {
+            forvard.setVisibility(View.GONE);
+        } else {
+            forvard.setVisibility(View.VISIBLE);
+        }
+        description.setText(step.getStepShortDescription());
+
+        if (step.getStepVideoUrl() == null) {
+            exoPlayerView.setVisibility(View.GONE);//TODO or it is better to put there cake image??? to an ImageView step_thumbnail???
+        } else {
+            exoPlayerView.setVisibility(View.VISIBLE);
+
+            // Prepare the MediaSource.
+            String userAgent = Util.getUserAgent(getContext(), getString(R.string.app_name));
+            Uri mediaUri = Uri.parse(step.getStepVideoUrl());
+            MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
+                    getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
+            exoPlayer.prepare(mediaSource);
+            //in case of rotation
+            exoPlayer.seekTo(exoPlayerPosition);
+            exoPlayer.setPlayWhenReady(true);
+        }
     }
 
     @Override
@@ -112,16 +155,8 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
             exoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
-            mPlayerView.setPlayer(exoPlayer);
+            exoPlayerView.setPlayer(exoPlayer);
             exoPlayer.addListener(this);
-
-            // Prepare the MediaSource.
-            String userAgent = Util.getUserAgent(getContext(), getString(R.string.app_name));
-            Uri mediaUri = Uri.parse(step.getStepVideoUrl());
-            MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
-                    getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
-            exoPlayer.prepare(mediaSource);
-            exoPlayer.setPlayWhenReady(true);
         }
     }
 
