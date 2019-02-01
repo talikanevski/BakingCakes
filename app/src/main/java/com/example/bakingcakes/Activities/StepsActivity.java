@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.bakingcakes.R;
 
 public class StepsActivity extends AppCompatActivity {
-    private static final String TAG = StepsActivity.class.getSimpleName();
+    public static final String CURRENT_STEP = "current step";
+    public static final String CURRENT_STEP_NUMBER = "current step number";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -14,4 +14,12 @@
     <dimen name="cake_card_cake_name_left_margin">16dp</dimen>
     <dimen name="cake_card_cake_name_top_margin">4dp</dimen>
 
+    <!--for exoplayer-->
+    <dimen name="left_margin">-10dp</dimen>
+    <dimen name="top_margin">-12dp</dimen>
+    <dimen name="text_size">20sp</dimen>
+    <dimen name="padding">4dp</dimen>
+    <dimen name="margin_right">10dp</dimen>
+
+
 </resources>

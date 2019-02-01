@@ -12,12 +12,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.bakingcakes.Activities.DetailActivity;
+import com.example.bakingcakes.Activities.StepsActivity;
 import com.example.bakingcakes.Fragments.StepFragment;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
 
 import java.util.List;
+
+import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP_NUMBER;
 
 public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
 
@@ -57,8 +60,9 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    Intent intent = new Intent(context, StepFragment.class);
-                    intent.putExtra(StepFragment.CURRENT_STEP, (Parcelable) currentStep);
+                    Intent intent = new Intent(context, StepsActivity.class);
+                    intent.putExtra(StepsActivity.CURRENT_STEP, (Parcelable) currentStep);
+                    intent.putExtra(CURRENT_STEP_NUMBER, currentStep.getStepId());
                     context.startActivity(intent);
                 }
             });

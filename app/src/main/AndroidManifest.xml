@@ -30,7 +30,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.MainActivity" />
         </activity>
-
+        <activity
+            android:name=".Activities.StepsActivity"
+            android:label="Steps"
+            android:parentActivityName=".Activities.DetailActivity"
+            tools:targetApi="jelly_bean">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.DetailActivity" />
+        </activity>
     </application>
-
 </manifest>
