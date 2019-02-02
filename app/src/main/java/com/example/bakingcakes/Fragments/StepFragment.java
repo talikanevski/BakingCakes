@@ -39,6 +39,7 @@ import com.google.android.exoplayer2.util.Util;
 
 import java.util.List;
 
+import static com.example.bakingcakes.Activities.DetailActivity.CURRENT_CAKE;
 import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP;
 import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP_NUMBER;
 
@@ -57,7 +58,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     private int stepNumber;
     private long exoPlayerPosition = 0;
     private Button back;
-    private Button forvard;
+    private Button forward;
     private String cakeName;
     private TextView description;
 //    private MediaSessionCompat mMediaSession;
@@ -68,11 +69,12 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_step, container, false);
 
         exoPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.exoPlayerView);
         back = rootView.findViewById(R.id.back);
-        forvard = rootView.findViewById(R.id.forward);
+        forward = rootView.findViewById(R.id.forward);
         description = rootView.findViewById(R.id.description);
 
         // Initialize the player.
@@ -86,6 +88,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             if (callingIntent.hasExtra(CURRENT_STEP)) {
                 step = callingIntent.getParcelableExtra(CURRENT_STEP);
                 stepNumber = callingIntent.getIntExtra(CURRENT_STEP_NUMBER, 0);
+//                cake = callingIntent.getParcelableExtra(CURRENT_CAKE);
             }
         } else {
             step = savedInstanceState.getParcelable(CURRENT_STEP);
@@ -93,8 +96,8 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             exoPlayerPosition = savedInstanceState.getLong(CURRENT_STEP_NUMBER);
         }
 
-        cakeName = cake.getCakeName();
-        stepList = cake.getSteps();
+//        cakeName = cake.getCakeName();
+//        stepList = cake.getSteps();
 
         setUp(stepNumber);
 
@@ -107,17 +110,23 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
         if (stepNumber == 0) {
             back.setVisibility(View.GONE);
-            actionBar.setTitle(cakeName + " - " + step.getStepShortDescription());
+            assert actionBar != null;
+            actionBar.setTitle(step.getStepShortDescription());
+//            actionBar.setTitle(cakeName + " - " + step.getStepShortDescription());
 
         } else {
             back.setVisibility(View.VISIBLE);
-            actionBar.setTitle(cakeName + "Step " + stepNumber);
+            assert actionBar != null;
+            actionBar.setTitle("Step " + stepNumber);
+
+//            actionBar.setTitle(cakeName + "Step " + stepNumber);
         }
-        if (stepNumber == stepList.size() - 1) {
-            forvard.setVisibility(View.GONE);
-        } else {
-            forvard.setVisibility(View.VISIBLE);
-        }
+//        if (stepNumber == stepList.size() - 1) {
+//            forward.setVisibility(View.GONE);
+//        } else {
+//            forward.setVisibility(View.VISIBLE);
+//        }
+
         description.setText(step.getStepShortDescription());
 
         if (step.getStepVideoUrl() == null) {
