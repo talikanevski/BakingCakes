@@ -1,10 +1,12 @@
 package com.example.bakingcakes.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -15,7 +17,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.bakingcakes.Adapters.IngredientAdapter;
@@ -33,11 +37,12 @@ public class DetailActivity extends AppCompatActivity {
     public static final String CURRENT_CAKE = "current cake";
     private View recyclerView;
     private IngredientAdapter adapter;
-    public Cake currentCake;
+    public static Cake currentCake;
     TextView servings;
     private RecyclerView ingredientsRecyclerView;
     private RecyclerView stepsRecyclerView;
     Bitmap bitmap;
+    public RelativeLayout listItem;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,11 +75,32 @@ public class DetailActivity extends AppCompatActivity {
         assert recyclerView != null;
         setupRecyclerViewForSteps((RecyclerView) stepsRecyclerView, steps);
 //
+//        FrameLayout layout = findViewById(R.id.stepsFrameLayout);
+//        layout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Context context = v.getContext();
+//                Intent intent = new Intent(context, StepsActivity.class);
+//                intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
+//            }
+//        });
+//        listItem = (RelativeLayout)findViewById(R.id.step_list_item);
+//        listItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Context context = v.getContext();
+//                Intent intent = new Intent(context, DetailActivity.class);
+//                intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
+//            }
+//        });
+
 //        FloatingActionButton play = findViewById(R.id.playFab);
 //        play.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//
+//                Context context = v.getContext();
+//                Intent intent = new Intent(context, DetailActivity.class);
+//                intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
 //            }
 //        });
 

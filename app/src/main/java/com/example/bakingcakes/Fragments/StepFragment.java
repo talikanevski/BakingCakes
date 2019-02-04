@@ -7,15 +7,20 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 //import android.support.v4.media.session.MediaSessionCompat;
 //import android.support.v4.media.session.PlaybackStateCompat;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.bakingcakes.Activities.DetailActivity;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
@@ -37,11 +42,13 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+
 import java.util.List;
 
 import static com.example.bakingcakes.Activities.DetailActivity.CURRENT_CAKE;
 import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP;
 import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP_NUMBER;
+import static com.example.bakingcakes.Activities.StepsActivity.STEP_LIST;
 
 //import android.support.v4.media.session.MediaSessionCompat;
 
@@ -59,10 +66,11 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     private long exoPlayerPosition = 0;
     private Button back;
     private Button forward;
-    private String cakeName;
     private TextView description;
-//    private MediaSessionCompat mMediaSession;
+    private ImageView imageView;
+    //    private MediaSessionCompat mMediaSession;
 //    private PlaybackStateCompat.Builder mStateBuilder;
+
 
     public StepFragment() {
     }
@@ -74,8 +82,25 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
         exoPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.exoPlayerView);
         back = rootView.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stepNumber--;
+                exoPlayerPosition = 0;
+                setUp(stepNumber);
+            }
+        });
         forward = rootView.findViewById(R.id.forward);
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stepNumber++;
+                exoPlayerPosition = 0;
+                setUp(stepNumber);
+            }
+        });
         description = rootView.findViewById(R.id.description);
+        imageView = rootView.findViewById(R.id.step_thumbnail);
 
         // Initialize the player.
         initializePlayer();
@@ -85,54 +110,64 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
         if (savedInstanceState == null) {
             Intent callingIntent = getActivity().getIntent();
+
             if (callingIntent.hasExtra(CURRENT_STEP)) {
                 step = callingIntent.getParcelableExtra(CURRENT_STEP);
                 stepNumber = callingIntent.getIntExtra(CURRENT_STEP_NUMBER, 0);
-//                cake = callingIntent.getParcelableExtra(CURRENT_CAKE);
+                cake = callingIntent.getParcelableExtra(CURRENT_CAKE);
             }
         } else {
             step = savedInstanceState.getParcelable(CURRENT_STEP);
             stepNumber = savedInstanceState.getInt(CURRENT_STEP_NUMBER);
+            cake = savedInstanceState.getParcelable(CURRENT_CAKE);
             exoPlayerPosition = savedInstanceState.getLong(CURRENT_STEP_NUMBER);
         }
 
 //        cakeName = cake.getCakeName();
-//        stepList = cake.getSteps();
+        stepList = cake.getSteps();
 
         setUp(stepNumber);
 
         return rootView;
     }
 
-    private void setUp(int stepNumber) {
+    private void setUp(int stepN) {
         exoPlayer.stop();
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+//        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
+        stepNumber = stepN;
+        step = stepList.get(stepNumber);
         if (stepNumber == 0) {
-            back.setVisibility(View.GONE);
-            assert actionBar != null;
-            actionBar.setTitle(step.getStepShortDescription());
+            back.setVisibility(View.INVISIBLE);
+            description.setText(cake.getCakeName() + ": " + step.getStepShortDescription());
+
+//            assert actionBar != null;
+//            actionBar.setTitle(step.getStepShortDescription());
 //            actionBar.setTitle(cakeName + " - " + step.getStepShortDescription());
 
         } else {
             back.setVisibility(View.VISIBLE);
-            assert actionBar != null;
-            actionBar.setTitle("Step " + stepNumber);
+            description.setText(cake.getCakeName() + ". Step " + step.getStepDescription());
+
+//            assert actionBar != null;
+//            actionBar.setTitle("Step " + stepNumber);
 
 //            actionBar.setTitle(cakeName + "Step " + stepNumber);
         }
-//        if (stepNumber == stepList.size() - 1) {
-//            forward.setVisibility(View.GONE);
-//        } else {
-//            forward.setVisibility(View.VISIBLE);
-//        }
+        if (stepNumber == stepList.size() - 1) {
+            forward.setVisibility(View.INVISIBLE);
+        } else {
+            forward.setVisibility(View.VISIBLE);
+        }
 
-        description.setText(step.getStepShortDescription());
-
-        if (step.getStepVideoUrl() == null) {
-            exoPlayerView.setVisibility(View.GONE);//TODO or it is better to put there cake image??? to an ImageView step_thumbnail???
+        if (step.getStepVideoUrl().isEmpty()) {
+            exoPlayerView.setVisibility(View.GONE);
+            imageView.setImageBitmap(cake.getCakeImage());
+            imageView.setVisibility(View.VISIBLE);
+        //TODO or it is better to put there cake image??? to an ImageView step_thumbnail???
         } else {
             exoPlayerView.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.GONE);
 
             // Prepare the MediaSource.
             String userAgent = Util.getUserAgent(getContext(), getString(R.string.app_name));
@@ -262,6 +297,17 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     @Override
     public void onPositionDiscontinuity() {
 
+    }
+
+    @Override //Providing Up navigation
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(getActivity());
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 //
 //    /**

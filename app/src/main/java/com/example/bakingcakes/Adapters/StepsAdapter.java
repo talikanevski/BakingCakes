@@ -22,6 +22,7 @@ import com.example.bakingcakes.R;
 import java.util.List;
 
 import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP_NUMBER;
+import static com.example.bakingcakes.Activities.StepsActivity.STEP_LIST;
 
 public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
 
@@ -65,7 +66,9 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
                     Intent intent = new Intent(context, StepsActivity.class);
                     intent.putExtra(StepsActivity.CURRENT_STEP, (Parcelable) currentStep);
                     intent.putExtra(CURRENT_STEP_NUMBER, currentStep.getStepId());
-//                    intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
+//                    intent.putExtra(STEP_LIST, (Parcelable) stepList);
+                    intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) DetailActivity.currentCake);
+
                     context.startActivity(intent);
                 }
             });
