@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 //import android.support.v4.media.session.MediaSessionCompat;
 //import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -66,6 +69,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     private ImageView imageView;
     //    private MediaSessionCompat mMediaSession;
 //    private PlaybackStateCompat.Builder mStateBuilder;
+    private AppBarLayout actionBar;
 
 
     public StepFragment() {
@@ -75,6 +79,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_step, container, false);
+//        actionBar = rootView.findViewById(R.id.step_app_bar);
 
         exoPlayerView = rootView.findViewById(R.id.exoPlayerView);
         back = rootView.findViewById(R.id.back);
@@ -128,6 +133,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
     private void setUp(int stepN) {
         exoPlayer.stop();
+
 //        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
         stepNumber = stepN;
@@ -136,18 +142,16 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             back.setVisibility(View.INVISIBLE);
             description.setText(cake.getCakeName() + ": " + step.getStepShortDescription());
 
-//            assert actionBar != null;
-//            actionBar.setTitle(step.getStepShortDescription());
-//            actionBar.setTitle(cakeName + " - " + step.getStepShortDescription());
+            assert actionBar != null;
+//            actionBar.setTitle(cake.getCakeName() + " - " + step.getStepShortDescription());
 
         } else {
             back.setVisibility(View.VISIBLE);
             description.setText(cake.getCakeName() + ". Step " + step.getStepDescription());
 
-//            assert actionBar != null;
-//            actionBar.setTitle("Step " + stepNumber);
+            assert actionBar != null;
 
-//            actionBar.setTitle(cakeName + "Step " + stepNumber);
+//            actionBar.setTitle(cake.getCakeName() + "Step " + stepNumber);
         }
         if (stepNumber == stepList.size() - 1) {
             forward.setVisibility(View.INVISIBLE);

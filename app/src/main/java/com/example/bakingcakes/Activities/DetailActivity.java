@@ -41,10 +41,12 @@ public class DetailActivity extends AppCompatActivity {
         final Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
-        Intent intent = getIntent();
-        currentCake = intent.getParcelableExtra(CURRENT_CAKE);
-
+        if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            currentCake = intent.getParcelableExtra(CURRENT_CAKE);
+        } else {
+            currentCake = savedInstanceState.getParcelable(CURRENT_CAKE);
+        }
         TextView servings = findViewById(R.id.servings);
         servings.setText(getString(R.string.yield) + currentCake.getServings() + getString(R.string._servings));
 
@@ -67,7 +69,7 @@ public class DetailActivity extends AppCompatActivity {
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
                 }
                 i.putExtra(Intent.EXTRA_SUBJECT, currentCake.getCakeName());
-                i.putExtra(Intent.EXTRA_TEXT, currentCake.getCakeIngredients().toArray()); //TODO doesn't work - improve
+                i.putExtra(Intent.EXTRA_TEXT, currentCake.getCakeIngredients().toArray()); //TODO doesn't work yet - improve
                 startActivity(Intent.createChooser(i, getString(R.string.share_text_for_chooser) + currentCake.getCakeName()));
             }
         });

@@ -1,6 +1,7 @@
 package com.example.bakingcakes.Activities;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,9 +22,11 @@ public class StepsActivity extends AppCompatActivity {
         //Providing Up navigation
         final Toolbar toolbar = findViewById(R.id.step_toolbar);
         setSupportActionBar(toolbar);
-
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle(DetailActivity.currentCake.getCakeName() + "Steps"); //TODO  doesn't work!!!
+
+        AppBarLayout actionBar = findViewById(R.id.step_app_bar);
+//        actionBar.setTitle(DetailActivity.currentCake.getCakeName() + "Steps"); //TODO  doesn't work!!!
     }
     @Override //Providing Up navigation
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -36,7 +36,7 @@
             style="@style/ExoMediaButton.Previous"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="@dimen/left_margin"
+            android:layout_marginStart="@dimen/left_margin"
             android:layout_marginTop="@dimen/top_margin"
             android:contentDescription="@string/exo_prev" />
 
