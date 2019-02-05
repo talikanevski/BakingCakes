@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      */
     private boolean mTwoPane;
     private TextView mEmptyView;
-    private CakeAdapter mAdapter;
     private View recyclerView;
 
     @Override
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setTitle(getTitle());
@@ -136,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Loader onCreateLoader(int i, Bundle bundle) {
         Log.i(LOG_TAG, "Test:  onCreateLoader called");

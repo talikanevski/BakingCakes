@@ -1,6 +1,7 @@
 package com.example.bakingcakes.Adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,8 @@ import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
-    Context mContext;
-    public List<Ingredient> ingredientList;
-    Ingredient currentIngredient;
+    private Context mContext;
+    private final List<Ingredient> ingredientList;
 
     public IngredientAdapter(Context context,
                              List<Ingredient> ingredients) {
@@ -24,8 +24,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         this.mContext = context;//TODO add boolean mTwoPane;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.ingredient_item_list_content, parent, false);
@@ -34,23 +35,21 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView quantityTv;
-        public TextView measureTv;
-        public TextView ingredientTv;
-        public final View mView;
+        final TextView quantityTv;
+        final TextView measureTv;
+        final TextView ingredientTv;
 
         ViewHolder(View view) {
             super(view);
-            mView = view;
-            quantityTv = (TextView) view.findViewById(R.id.quantity_tv);
-            measureTv = (TextView) view.findViewById(R.id.measure_tv);
-            ingredientTv = (TextView) view.findViewById(R.id.ingredient_tv);
+            quantityTv = view.findViewById(R.id.quantity_tv);
+            measureTv = view.findViewById(R.id.measure_tv);
+            ingredientTv = view.findViewById(R.id.ingredient_tv);
         }
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        currentIngredient = ingredientList.get(position);
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        Ingredient currentIngredient = ingredientList.get(position);
         Double quantity = currentIngredient.getIngredientQuantity();
 //        String newQuantity = quantityPolish(quantity);
 //        holder.quantityTv.setText(newQuantity + " ");

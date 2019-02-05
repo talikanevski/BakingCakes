@@ -2,7 +2,7 @@ package com.example.bakingcakes.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
@@ -13,23 +13,18 @@ import android.widget.TextView;
 
 import com.example.bakingcakes.Activities.DetailActivity;
 import com.example.bakingcakes.Activities.StepsActivity;
-import com.example.bakingcakes.Fragments.StepFragment;
-import com.example.bakingcakes.Models.Cake;
-import com.example.bakingcakes.Models.Ingredient;
+
 import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
 
 import java.util.List;
 
 import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP_NUMBER;
-import static com.example.bakingcakes.Activities.StepsActivity.STEP_LIST;
 
 public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
 
-    Context mContext;
-    public List<Step> stepList;
-    Step currentStep;
-//    Cake currentCake;
+    private Context mContext;
+    private final List<Step> stepList;
 
     public StepsAdapter(Context context,
                         List<Step> steps) {
@@ -37,8 +32,9 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
         this.mContext = context;//TODO add boolean mTwoPane;
     }
 
+    @NonNull
     @Override
-    public StepsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StepsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.steps_item_list_content, parent, false);
@@ -46,16 +42,13 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView shortDescription;
-        public RelativeLayout listItem;
-
-        public final View mView;
+        final TextView shortDescription;
+        final RelativeLayout listItem;
 
         ViewHolder(View view) {
             super(view);
-            mView = view;
-            shortDescription = (TextView) view.findViewById(R.id.tv_step_number_and_short_description);
-            listItem = (RelativeLayout) view.findViewById(R.id.step_list_item);
+            shortDescription = view.findViewById(R.id.tv_step_number_and_short_description);
+            listItem = view.findViewById(R.id.step_list_item);
         }
 
         void bind(final Step currentStep) {
@@ -64,10 +57,9 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, StepsActivity.class);
-                    intent.putExtra(StepsActivity.CURRENT_STEP, (Parcelable) currentStep);
+                    intent.putExtra(StepsActivity.CURRENT_STEP, currentStep);
                     intent.putExtra(CURRENT_STEP_NUMBER, currentStep.getStepId());
-//                    intent.putExtra(STEP_LIST, (Parcelable) stepList);
-                    intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) DetailActivity.currentCake);
+                    intent.putExtra(DetailActivity.CURRENT_CAKE, DetailActivity.currentCake);
 
                     context.startActivity(intent);
                 }
@@ -76,8 +68,8 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final StepsAdapter.ViewHolder holder, int position) {
-        currentStep = stepList.get(position);
+    public void onBindViewHolder(@NonNull final StepsAdapter.ViewHolder holder, int position) {
+        Step currentStep = stepList.get(position);
         String description = currentStep.getStepShortDescription();
         if (position == 0) {
             holder.shortDescription.setText(description);

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/cv_recipe_card"
+    android:id="@+id/cv_recipe_card"
     android:layout_width="match_parent"
     android:layout_height="@dimen/cake_card_height"
     android:layout_marginLeft="@dimen/cake_card_horizontal_margin"
@@ -15,6 +14,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/grey"
+    android:id="@+id/linear_layout"
     >
     <TextView
         android:id="@+id/cake_name"
@@ -31,7 +31,8 @@
         android:layout_width="match_parent"
         android:scaleType="fitXY"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:contentDescription="@string/image" />
 
     <!--TODO&#45;&#45; include button "WATCH" in the middle of the image,-->
     <!--that plays the introduction video-->

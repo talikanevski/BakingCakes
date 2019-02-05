@@ -1,7 +1,6 @@
 package com.example.bakingcakes.Models;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,9 +10,9 @@ import java.util.List;
 public class Cake implements Parcelable {
     private int cakeId;
     private String cakeName;
-    private List<Ingredient> cakeIngredients = null;
-    private List<Step> steps = null;
-    private String servings;
+    private List<Ingredient> cakeIngredients;
+    private List<Step> steps;
+    private final String servings;
     private Bitmap cakeImage;
 
     public Cake(int cakeId, String cakeName, List<Ingredient> cakeIngredients, Step[] steps, String servings, Bitmap cakeImage) {
@@ -25,7 +24,7 @@ public class Cake implements Parcelable {
         this.cakeImage = cakeImage;
     }
 
-    protected Cake(Parcel in) {//Bitmap implements Parcelable by definition
+    private Cake(Parcel in) {//Bitmap implements Parcelable by definition
         cakeId = in.readInt();
         cakeName = in.readString();
         servings = in.readString();

@@ -11,6 +11,7 @@
      limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
@@ -25,7 +26,8 @@
         android:thumbTint="@color/colorPrimary"
         android:progressTint="@color/colorPrimary"
         android:progressBackgroundTint="@color/colorPrimaryDark"
-        android:secondaryProgressTint="@color/almostWhite"/>
+        android:secondaryProgressTint="@color/almostWhite"
+        tools:targetApi="lollipop" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,23 +37,26 @@
         <ImageButton android:id="@id/exo_prev"
             style="@style/ExoMediaButton.Previous"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_marginLeft="@dimen/left_margin"
-            android:layout_marginTop="@dimen/top_margin"/>
+            android:layout_marginTop="@dimen/top_margin"
+            android:contentDescription="@string/exo_prev" />
 
         <ImageButton android:id="@id/exo_play"
             style="@style/ExoMediaButton.Play"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/left_margin"
             android:layout_toRightOf="@id/exo_prev"
-            android:layout_marginTop="@dimen/top_margin"/>
+            android:layout_marginTop="@dimen/top_margin"
+            android:contentDescription="@string/exo_play" />
 
         <ImageButton android:id="@id/exo_pause"
             style="@style/ExoMediaButton.Pause"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/exo_prev"
             android:layout_marginLeft="@dimen/left_margin"
-            android:layout_marginTop="@dimen/top_margin"/>
+            android:layout_marginTop="@dimen/top_margin"
+            android:contentDescription="@string/exo_pause" />
 
         <TextView android:id="@id/exo_position"
             android:layout_width="wrap_content"
@@ -67,7 +72,7 @@
         <TextView android:id="@+id/tv_time_slash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/"
+            android:text="@string/slash"
             android:textSize="@dimen/text_size"
             android:textStyle="bold"
             android:paddingLeft="@dimen/padding"

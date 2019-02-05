@@ -18,7 +18,7 @@ public class CakeLoader extends AsyncTaskLoader<List<Cake>> {
     /**
      * Tag for log messages
      */
-    public static final String LOG_TAG = CakeLoader.class.getName();
+    private static final String LOG_TAG = CakeLoader.class.getName();
 
     /**
      * Query URL
@@ -47,6 +47,6 @@ public class CakeLoader extends AsyncTaskLoader<List<Cake>> {
         }
 
         /*Perform the network request, parse the response, and extract a list of cakes.**/
-        return Utils.fetchData(mUrl);
+        return Utils.fetchData();
     }
 }

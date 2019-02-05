@@ -8,10 +8,11 @@ import android.view.MenuItem;
 
 import com.example.bakingcakes.R;
 
+import java.util.Objects;
+
 public class StepsActivity extends AppCompatActivity {
     public static final String CURRENT_STEP = "current step";
     public static final String CURRENT_STEP_NUMBER = "current step number";
-    public static final String STEP_LIST = "step list";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +21,9 @@ public class StepsActivity extends AppCompatActivity {
         //Providing Up navigation
         final Toolbar toolbar = findViewById(R.id.step_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle(DetailActivity.currentCake.getCakeName() + "Steps"); //TODO  doesn't work!!!
     }
     @Override //Providing Up navigation
     public boolean onOptionsItemSelected(MenuItem item) {

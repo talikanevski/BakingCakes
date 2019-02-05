@@ -13,8 +13,9 @@
             android:id="@+id/exoPlayerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            tools:ignore="MissingConstraints" />
 
         <ImageView
             android:id="@+id/step_thumbnail"
@@ -23,7 +24,9 @@
             android:layout_below="@id/exoPlayerView"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:contentDescription="@string/step_thumbnail"
+            tools:ignore="MissingConstraints" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -60,14 +63,14 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/exoPlayerView">
+            app:layout_constraintBottom_toBottomOf="parent" >
 
             <Button
                 android:id="@+id/back"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/step_thumbnail"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/forward"
                 android:layout_weight="1"
@@ -98,8 +101,8 @@
             android:layout_margin="25sp"
             android:layout_marginBottom="8dp"
             android:lineSpacingMultiplier="1.1"
-            android:textSize="25sp"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/exoPlayerView"
             tools:layout_editor_absoluteX="25dp" />
 
     </android.support.constraint.ConstraintLayout>

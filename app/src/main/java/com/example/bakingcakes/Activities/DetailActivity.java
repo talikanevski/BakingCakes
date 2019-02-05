@@ -1,12 +1,10 @@
 package com.example.bakingcakes.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -17,9 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.bakingcakes.Adapters.IngredientAdapter;
@@ -30,19 +26,12 @@ import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
 
 import java.util.List;
+import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity {
-    private static final String LOG_TAG = DetailActivity.class.getName();
 
     public static final String CURRENT_CAKE = "current cake";
-    private View recyclerView;
-    private IngredientAdapter adapter;
     public static Cake currentCake;
-    TextView servings;
-    private RecyclerView ingredientsRecyclerView;
-    private RecyclerView stepsRecyclerView;
-    Bitmap bitmap;
-    public RelativeLayout listItem;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,58 +40,21 @@ public class DetailActivity extends AppCompatActivity {
         //Providing Up navigation
         final Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        recyclerView = findViewById(R.id.ingredients_item_list);
-        assert recyclerView != null;
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         currentCake = intent.getParcelableExtra(CURRENT_CAKE);
 
-        servings = findViewById(R.id.servings);
-        servings.setText("Yield: " + currentCake.getServings() + " servings");
-        currentCake.getCakeIngredients();
-
-        ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
-        assert recyclerView != null;
+        TextView servings = findViewById(R.id.servings);
+        servings.setText(getString(R.string.yield) + currentCake.getServings() + getString(R.string._servings));
 
         List<Ingredient> ingredients = currentCake.getCakeIngredients();
-        ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
-        assert recyclerView != null;
-        setupRecyclerViewForIngredients((RecyclerView) ingredientsRecyclerView, ingredients);
+        RecyclerView ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
+        setupRecyclerViewForIngredients(ingredientsRecyclerView, ingredients);
 
         List<Step> steps = currentCake.getSteps();
-        stepsRecyclerView = findViewById(R.id.steps_item_list);
-        assert recyclerView != null;
-        setupRecyclerViewForSteps((RecyclerView) stepsRecyclerView, steps);
-//
-//        FrameLayout layout = findViewById(R.id.stepsFrameLayout);
-//        layout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Context context = v.getContext();
-//                Intent intent = new Intent(context, StepsActivity.class);
-//                intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
-//            }
-//        });
-//        listItem = (RelativeLayout)findViewById(R.id.step_list_item);
-//        listItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Context context = v.getContext();
-//                Intent intent = new Intent(context, DetailActivity.class);
-//                intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
-//            }
-//        });
-
-//        FloatingActionButton play = findViewById(R.id.playFab);
-//        play.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Context context = v.getContext();
-//                Intent intent = new Intent(context, DetailActivity.class);
-//                intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
-//            }
-//        });
+        RecyclerView stepsRecyclerView = findViewById(R.id.steps_item_list);
+        setupRecyclerViewForSteps(stepsRecyclerView, steps);
 
         // Setup FAB to share the ingredients of the current cake
         FloatingActionButton fabShare = findViewById(R.id.share_fab);
@@ -111,9 +63,6 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
                 }
@@ -124,6 +73,7 @@ public class DetailActivity extends AppCompatActivity {
         });
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.toolbar_layout);
         collapsingToolbar.setTitle(currentCake.getCakeName());
+
         loadBackdrop();
     }
 
@@ -156,4 +106,13 @@ public class DetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(CURRENT_CAKE, currentCake);
+
+        super.onSaveInstanceState(outState);
+    }
+
+
 }

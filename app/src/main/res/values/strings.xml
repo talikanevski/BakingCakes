@@ -8,5 +8,15 @@
     <string name="share_text_for_chooser">Share ingredients for :</string>
     <string name="previous_step">Previous Step</string>
     <string name="next_step">Next Step</string>
+    <string name="backdrop">backdrop</string>
+    <string name="image">image</string>
+    <string name="exo_prev">exo_prev</string>
+    <string name="exo_pause">exo_pause</string>
+    <string name="slash">/</string>
+    <string name="step_thumbnail">step_thumbnail</string>
+    <string name="textview">TextView</string>
+    <string name="yield">Yield:</string>
+    <string name="_servings">servings</string>
+    <string name="exo_play">exo_play</string>
 
 </resources>

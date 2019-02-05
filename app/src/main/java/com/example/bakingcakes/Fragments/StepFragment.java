@@ -8,9 +8,6 @@ import android.support.v4.app.Fragment;
 //import android.support.v4.media.session.MediaSessionCompat;
 //import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -44,11 +41,10 @@ import com.google.android.exoplayer2.util.Util;
 
 
 import java.util.List;
+import java.util.Objects;
 
-import static com.example.bakingcakes.Activities.DetailActivity.CURRENT_CAKE;
 import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP;
 import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP_NUMBER;
-import static com.example.bakingcakes.Activities.StepsActivity.STEP_LIST;
 
 //import android.support.v4.media.session.MediaSessionCompat;
 
@@ -60,7 +56,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     private SimpleExoPlayerView exoPlayerView;
     private SimpleExoPlayer exoPlayer;
     private Cake cake;
-    public List<Step> stepList;
+    private List<Step> stepList;
     private Step step;
     private int stepNumber;
     private long exoPlayerPosition = 0;
@@ -80,7 +76,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
         View rootView = inflater.inflate(R.layout.fragment_step, container, false);
 
-        exoPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.exoPlayerView);
+        exoPlayerView = rootView.findViewById(R.id.exoPlayerView);
         back = rootView.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,21 +105,20 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 //        initializeMediaSession();
 
         if (savedInstanceState == null) {
-            Intent callingIntent = getActivity().getIntent();
+            Intent callingIntent = Objects.requireNonNull(getActivity()).getIntent();
 
             if (callingIntent.hasExtra(CURRENT_STEP)) {
                 step = callingIntent.getParcelableExtra(CURRENT_STEP);
                 stepNumber = callingIntent.getIntExtra(CURRENT_STEP_NUMBER, 0);
-                cake = callingIntent.getParcelableExtra(CURRENT_CAKE);
+                cake = callingIntent.getParcelableExtra(DetailActivity.CURRENT_CAKE);
             }
         } else {
             step = savedInstanceState.getParcelable(CURRENT_STEP);
             stepNumber = savedInstanceState.getInt(CURRENT_STEP_NUMBER);
-            cake = savedInstanceState.getParcelable(CURRENT_CAKE);
+            cake = savedInstanceState.getParcelable(DetailActivity.CURRENT_CAKE);
             exoPlayerPosition = savedInstanceState.getLong(CURRENT_STEP_NUMBER);
         }
 
-//        cakeName = cake.getCakeName();
         stepList = cake.getSteps();
 
         setUp(stepNumber);
@@ -164,7 +159,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             exoPlayerView.setVisibility(View.GONE);
             imageView.setImageBitmap(cake.getCakeImage());
             imageView.setVisibility(View.VISIBLE);
-        //TODO or it is better to put there cake image??? to an ImageView step_thumbnail???
         } else {
             exoPlayerView.setVisibility(View.VISIBLE);
             imageView.setVisibility(View.GONE);
@@ -173,7 +167,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             String userAgent = Util.getUserAgent(getContext(), getString(R.string.app_name));
             Uri mediaUri = Uri.parse(step.getStepVideoUrl());
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
-                    getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
+                    Objects.requireNonNull(getContext()), userAgent), new DefaultExtractorsFactory(), null, null);
             exoPlayer.prepare(mediaSource);
             //in case of rotation
             exoPlayer.seekTo(exoPlayerPosition);
@@ -182,7 +176,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(CURRENT_STEP, step);
         outState.putInt(CURRENT_STEP_NUMBER, stepNumber);
         if (exoPlayer != null) {
@@ -304,7 +298,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(getActivity());
+                NavUtils.navigateUpFromSameTask(Objects.requireNonNull(getActivity()));
                 return true;
         }
         return super.onOptionsItemSelected(item);

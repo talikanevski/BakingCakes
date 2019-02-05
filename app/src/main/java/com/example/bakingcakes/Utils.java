@@ -2,7 +2,6 @@ package com.example.bakingcakes;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -37,13 +36,13 @@ public final class Utils {
 
     // for some reason in the GIVEN_JSON_DATA we don't have any cake images, thi final product,
     // so I've searched in the https://www.pexels.com and have found those:
-    final static String NUTELLA_PIE_URL = "https://user-images.githubusercontent.com/36941009/52073866-6b9a0700-253d-11e9-9d97-a55775bc0290.jpg";
+    private final static String NUTELLA_PIE_URL = "https://user-images.githubusercontent.com/36941009/52073866-6b9a0700-253d-11e9-9d97-a55775bc0290.jpg";
 
-    final static String BROWNIES_URL = "https://user-images.githubusercontent.com/36941009/52075659-b1f16500-2541-11e9-8577-c8e4c7d0de59.jpeg";
-    final static String CHEESECAKE = "https://user-images.githubusercontent.com/36941009/52075732-d9483200-2541-11e9-9208-e86d378bc5cd.jpg";
+    private final static String BROWNIES_URL = "https://user-images.githubusercontent.com/36941009/52075659-b1f16500-2541-11e9-8577-c8e4c7d0de59.jpeg";
+    private final static String CHEESECAKE = "https://user-images.githubusercontent.com/36941009/52075732-d9483200-2541-11e9-9208-e86d378bc5cd.jpg";
 
     //this one from here: https://unsplash.com/photos/B4QQAYBn8fU :
-    final static String YELLOW_CAKE_URL = "https://user-images.githubusercontent.com/36941009/52075772-f977f100-2541-11e9-8260-1fa604a77ddc.jpg";
+    private final static String YELLOW_CAKE_URL = "https://user-images.githubusercontent.com/36941009/52075772-f977f100-2541-11e9-8260-1fa604a77ddc.jpg";
 
     private Utils() {
     }
@@ -217,7 +216,7 @@ public final class Utils {
     /**
      * Query and return a list of Cake objects.
      */
-    public static List<Cake> fetchData(String requestUrl) {
+    public static List<Cake> fetchData() {
 
         Log.i(LOG_TAG, "Test:  fetchData called");
 
@@ -250,7 +249,7 @@ public final class Utils {
         return extractFeatureFromJson(jsonResponse);
     }
 
-    public static List<Ingredient> extractIngredientsFromJson(JSONArray ingredientsArray) throws JSONException {
+    private static List<Ingredient> extractIngredientsFromJson(JSONArray ingredientsArray) throws JSONException {
         /*Create an empty ArrayList that we can start adding cakes to**/
         List<Ingredient> ingredients = new ArrayList<>();
 
@@ -268,7 +267,7 @@ public final class Utils {
         return ingredients;
     }
 
-    public static Step[] extractStepsFromJson(JSONArray stepsArray) throws JSONException {
+    private static Step[] extractStepsFromJson(JSONArray stepsArray) throws JSONException {
         Step[] steps = new Step[stepsArray.length()];
 
         for (int i = 0; i < stepsArray.length(); i++) {

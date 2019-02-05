@@ -4,12 +4,13 @@ package com.example.bakingcakes.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -22,11 +23,10 @@ import java.util.List;
 
 public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
 
-    Context mContext;
-    public List<Cake> cakeList;
-    Cake currentCake;
+    private Context mContext;
+    private final List<Cake> cakeList;
     private final boolean mTwoPane;
-    Bitmap bitmap; // cake image NOT from the given JSON
+    private Bitmap bitmap; // cake image NOT from the given JSON
 
     public CakeAdapter(Context context,
                        List<Cake> cakes,
@@ -36,8 +36,9 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
         this.mTwoPane = twoPane;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.cake_item_list_content, parent, false);
@@ -45,31 +46,30 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView posterImage;
-        public TextView cakeName;
-        public final View mView;
+        final ImageView posterImage;
+        final TextView cakeName;
+        final LinearLayout linearLayout;
 
 
         ViewHolder(View view) {
             super(view);
-            mView = view;
-            posterImage = (ImageView) view.findViewById(R.id.image);
-            cakeName = (TextView) view.findViewById(R.id.cake_name);
+            posterImage = view.findViewById(R.id.image);
+            cakeName = view.findViewById(R.id.cake_name);
+            linearLayout = view.findViewById(R.id.linear_layout);
         }
 
         void bind(final Cake currentCake) {
 
             bitmap = currentCake.getCakeImage();
-            assert currentCake != null;
 
             posterImage.setImageBitmap(bitmap);
 
-            posterImage.setOnClickListener(new View.OnClickListener() {
+            linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
+                    intent.putExtra(DetailActivity.CURRENT_CAKE, currentCake);
                     //passing Bitmap
                     bitmap = currentCake.getCakeImage();
 
@@ -82,21 +82,12 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
                     context.startActivity(intent);
                 }
             });
-            cakeName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(DetailActivity.CURRENT_CAKE, (Parcelable) currentCake);
-                    context.startActivity(intent);
-                }
-            });
         }
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        currentCake = cakeList.get(position);
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        Cake currentCake = cakeList.get(position);
         holder.cakeName.setText(currentCake.getCakeName());
         holder.bind(currentCake);
     }

@@ -20,7 +20,7 @@
             android:id="@+id/tv_step_number_and_short_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
@@ -37,7 +37,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
-            android:clickable="true"
             card_view:srcCompat="@android:drawable/ic_media_play" />
 
     </RelativeLayout>
