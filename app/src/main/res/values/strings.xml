@@ -18,5 +18,16 @@
     <string name="yield">Yield:</string>
     <string name="_servings">servings</string>
     <string name="exo_play">exo_play</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="image_cake">image_cake</string>
+    <string name="appwidget_cake_name">appwidget_cake_name</string>
+    <string name="cake_name">Cake name</string>
+    <string name="cake_for_widget">recent cake for widget</string>
+    <string name="cake_name_key" translatable="false">cake name</string>
+    <string name="cake_ingredients_key" translatable="false">cake ingredients</string>
+    <string name="cake_thumbnail_url_key" translatable="false">cake thumbnailUrl url</string>
+    <string name="pref_file_name" translatable="false">prefs for widget</string>
+
 
 </resources>

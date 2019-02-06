@@ -1,6 +1,9 @@
 package com.example.bakingcakes.Activities;
 
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -24,6 +27,9 @@ import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
+import android.content.SharedPreferences;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,6 +50,19 @@ public class DetailActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Intent intent = getIntent();
             currentCake = intent.getParcelableExtra(CURRENT_CAKE);
+
+            // save selected recipe details to SharedPreferences for the widget to use
+            SharedPreferences recentCake = getSharedPreferences(getString(R.string.pref_file_name), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+            SharedPreferences.Editor editor = recentCake.edit();
+            editor.putString(getString(R.string.cake_name_key), currentCake.getCakeName());
+//            editor.putString(getString(R.string.cake_ingredients_key), formatIngredientsForWidget());//TODO
+//            editor.putString(getString(R.string.cake_thumbnail_url_key), String.valueOf(currentCake.getCakeImage()));
+            editor.commit();
+
+            // and let the widget know there is a new recentCake to display
+            Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            sendBroadcast(widgetIntent);
+
         } else {
             currentCake = savedInstanceState.getParcelable(CURRENT_CAKE);
         }
