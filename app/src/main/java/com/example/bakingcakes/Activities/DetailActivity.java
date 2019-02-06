@@ -27,6 +27,7 @@ import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
+
 import android.content.SharedPreferences;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -37,7 +38,9 @@ import java.util.Objects;
 public class DetailActivity extends AppCompatActivity {
 
     public static final String CURRENT_CAKE = "current cake";
+    public static final String IMAGE = "image";
     public static Cake currentCake;
+    public static byte[] byteArray;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,9 +50,21 @@ public class DetailActivity extends AppCompatActivity {
         final Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        final ImageView imageView = findViewById(R.id.backdrop);
         if (savedInstanceState == null) {
             Intent intent = getIntent();
-            currentCake = intent.getParcelableExtra(CURRENT_CAKE);
+
+            if (intent.getExtras() != null) {
+                currentCake = intent.getExtras().getParcelable(CURRENT_CAKE);
+
+                //retrieve the Bitmap from the intent
+                Bitmap bmp;
+                byteArray = getIntent().getByteArrayExtra(IMAGE);
+                bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                assert currentCake != null;
+                imageView.setImageBitmap(bmp);
+            }
+//            currentCake = intent.getParcelableExtra(CURRENT_CAKE);
 
             // save selected recipe details to SharedPreferences for the widget to use
             SharedPreferences recentCake = getSharedPreferences(getString(R.string.pref_file_name), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
@@ -65,6 +80,12 @@ public class DetailActivity extends AppCompatActivity {
 
         } else {
             currentCake = savedInstanceState.getParcelable(CURRENT_CAKE);
+            //retrieve the Bitmap
+            Bitmap bmp;
+            byteArray = savedInstanceState.getByteArray(IMAGE);
+            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            assert currentCake != null;
+            imageView.setImageBitmap(bmp);
         }
         TextView servings = findViewById(R.id.servings);
         servings.setText(getString(R.string.yield) + currentCake.getServings() + getString(R.string._servings));
@@ -94,19 +115,20 @@ public class DetailActivity extends AppCompatActivity {
         });
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.toolbar_layout);
         collapsingToolbar.setTitle(currentCake.getCakeName());
-
-        loadBackdrop();
     }
 
     private void loadBackdrop() {
         final ImageView imageView = findViewById(R.id.backdrop);
-
         //retrieve the Bitmap from the intent
-        Bitmap bmp;
-        byte[] byteArray = getIntent().getByteArrayExtra("image");
-        bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-        assert currentCake != null;
-        imageView.setImageBitmap(bmp);
+
+        if (getIntent().getExtras() != null) {
+            Bitmap bmp;
+            byte[] byteArray = getIntent().getByteArrayExtra(IMAGE);
+            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            assert currentCake != null;
+            imageView.setImageBitmap(bmp);
+
+        }
     }
 
     private void setupRecyclerViewForIngredients(@NonNull RecyclerView recyclerView, List<Ingredient> ingredients) {
@@ -122,18 +144,29 @@ public class DetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                //it was my first option
+//                NavUtils.navigateUpFromSameTask(this);
+
+                // this is a second option
+                //from here: https://stackoverflow.com/questions/6554317/savedinstancestate-is-always-null
+//                Intent intent = NavUtils.getParentActivityIntent(this);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                NavUtils.navigateUpTo(this, intent);
+
+                //3rd option
+//                finish();
+
+                //last option
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(CURRENT_CAKE, currentCake);
-
+        outState.putByteArray(IMAGE, byteArray);
         super.onSaveInstanceState(outState);
     }
-
-
 }

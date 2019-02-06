@@ -34,6 +34,7 @@
         <activity
             android:name=".Activities.DetailActivity"
             android:label="Details"
+            android:launchMode="singleTop"
             android:parentActivityName=".Activities.MainActivity"
             tools:targetApi="jelly_bean">
 
@@ -45,6 +46,7 @@
         <activity
             android:name=".Activities.StepsActivity"
             android:label="Steps"
+            android:launchMode="singleTop"
             android:parentActivityName=".Activities.DetailActivity"
             tools:targetApi="jelly_bean">
 

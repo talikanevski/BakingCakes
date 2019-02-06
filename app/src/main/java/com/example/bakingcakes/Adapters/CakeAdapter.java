@@ -77,7 +77,7 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
 
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
                     byte[] byteArray = bStream.toByteArray();
-                    intent.putExtra("image", byteArray);
+                    intent.putExtra(DetailActivity.IMAGE, byteArray);
 
                     context.startActivity(intent);
                 }
