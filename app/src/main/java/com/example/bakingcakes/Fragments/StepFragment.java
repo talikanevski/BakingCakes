@@ -71,7 +71,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 //    private PlaybackStateCompat.Builder mStateBuilder;
     private AppBarLayout actionBar;
 
-
     public StepFragment() {
     }
 
@@ -79,7 +78,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_step, container, false);
-//        actionBar = rootView.findViewById(R.id.step_app_bar);
+        actionBar = rootView.findViewById(R.id.step_app_bar);
 
         exoPlayerView = rootView.findViewById(R.id.exoPlayerView);
         back = rootView.findViewById(R.id.back);
@@ -134,24 +133,19 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     private void setUp(int stepN) {
         exoPlayer.stop();
 
-//        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-
         stepNumber = stepN;
         step = stepList.get(stepNumber);
         if (stepNumber == 0) {
             back.setVisibility(View.INVISIBLE);
-            description.setText(cake.getCakeName() + ": " + step.getStepShortDescription());
+            description.setText(step.getStepShortDescription());
 
             assert actionBar != null;
-//            actionBar.setTitle(cake.getCakeName() + " - " + step.getStepShortDescription());
 
         } else {
             back.setVisibility(View.VISIBLE);
-            description.setText(cake.getCakeName() + ". Step " + step.getStepDescription());
+            description.setText( "Step " + step.getStepDescription());
 
             assert actionBar != null;
-
-//            actionBar.setTitle(cake.getCakeName() + "Step " + stepNumber);
         }
         if (stepNumber == stepList.size() - 1) {
             forward.setVisibility(View.INVISIBLE);

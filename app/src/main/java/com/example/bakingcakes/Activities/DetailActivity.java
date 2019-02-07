@@ -117,20 +117,6 @@ public class DetailActivity extends AppCompatActivity {
         collapsingToolbar.setTitle(currentCake.getCakeName());
     }
 
-    private void loadBackdrop() {
-        final ImageView imageView = findViewById(R.id.backdrop);
-        //retrieve the Bitmap from the intent
-
-        if (getIntent().getExtras() != null) {
-            Bitmap bmp;
-            byte[] byteArray = getIntent().getByteArrayExtra(IMAGE);
-            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            assert currentCake != null;
-            imageView.setImageBitmap(bmp);
-
-        }
-    }
-
     private void setupRecyclerViewForIngredients(@NonNull RecyclerView recyclerView, List<Ingredient> ingredients) {
         recyclerView.setAdapter(new IngredientAdapter(this, ingredients));
     }

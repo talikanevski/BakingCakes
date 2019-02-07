@@ -6,6 +6,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.bakingcakes.R;
 
@@ -19,14 +20,15 @@ public class StepsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_steps);
+        
         //Providing Up navigation
         final Toolbar toolbar = findViewById(R.id.step_toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitle(DetailActivity.currentCake.getCakeName() + "Steps"); //TODO  doesn't work!!!
+        toolbar.setTitle(DetailActivity.currentCake.getCakeName() + "Steps");
 
-        AppBarLayout actionBar = findViewById(R.id.step_app_bar);
-//        actionBar.setTitle(DetailActivity.currentCake.getCakeName() + "Steps"); //TODO  doesn't work!!!
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(DetailActivity.currentCake.getCakeName() + " Steps");
     }
     @Override //Providing Up navigation
     public boolean onOptionsItemSelected(MenuItem item) {
