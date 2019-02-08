@@ -1,6 +1,8 @@
 package com.example.bakingcakes.Adapters;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -52,6 +54,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             measureTv = view.findViewById(R.id.measure_tv);
             ingredientTv = view.findViewById(R.id.ingredient_tv);
         }
+
     }
 
     @Override
@@ -65,21 +68,15 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         newMeasure = measurePolish(measure, quantity);
         holder.measureTv.setText(newMeasure + " ");
         holder.ingredientTv.setText(currentIngredient.getIngredientName());
+        saveIngredientsToWidget();
+    }
 
+    //Since RecyclerView is not supported for app widgets,
+    // I have to format ingredients for widget differently then I did in RecyclerViewForIngredients
+    public void saveIngredientsToWidget() {
         // save details to SharedPreferences for the widget to use
         ingredientsForWidget = ingredientsForWidget + "\n"+ quantity + " " + newMeasure + " " + currentIngredient.getIngredientName();
         DetailActivity.recentCake.edit().putString(mContext.getString(R.string.widget_ingredients), ingredientsForWidget).apply();
-
-    }
-
-    private String getIngredientsAsString() {
-        String widgetIngredients = new String();
-        widgetIngredients = quantity + " " + newMeasure + " " + currentIngredient.getIngredientName();
-
-//        for (int i = 0; i < widgetIngredients.length; i++) {
-//            widgetIngredients[i] = quantity + " " + newMeasure + " " + currentIngredient.getIngredientName();
-//        }
-        return (String) TextUtils.join("\n", Collections.singleton(widgetIngredients));
     }
 
     @Override

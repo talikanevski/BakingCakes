@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
+
         android:orientation="horizontal">
 
         <ImageView
@@ -45,6 +46,7 @@
         android:id="@+id/widget_ingredients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="16dp"
+        android:background="@drawable/card">
         android:textSize="13sp"></TextView>
 </LinearLayout>

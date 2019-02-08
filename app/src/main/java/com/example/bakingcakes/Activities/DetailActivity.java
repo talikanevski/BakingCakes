@@ -65,19 +65,6 @@ public class DetailActivity extends AppCompatActivity {
                 assert currentCake != null;
                 imageView.setImageBitmap(bmp);
             }
-//            currentCake = intent.getParcelableExtra(CURRENT_CAKE);
-
-//            // save selected recipe details to SharedPreferences for the widget to use
-//            SharedPreferences recentCake = getSharedPreferences(getString(R.string.pref_file_name), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
-//            SharedPreferences.Editor editor = recentCake.edit();
-//            editor.putString(getString(R.string.cake_name_key), currentCake.getCakeName());
-////            editor.putString(getString(R.string.cake_ingredients_key), formatIngredientsForWidget());
-//
-//            editor.apply();
-//
-//            // and let the widget know there is a new recentCake to display
-//            Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//            sendBroadcast(widgetIntent);
 
         } else {
             currentCake = savedInstanceState.getParcelable(CURRENT_CAKE);
@@ -104,12 +91,8 @@ public class DetailActivity extends AppCompatActivity {
         recentCake = getSharedPreferences(getString(R.string.pref_file_name), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = recentCake.edit();
         editor.putString(getString(R.string.cake_name_key), currentCake.getCakeName());
-//            editor.putString(getString(R.string.cake_ingredients_key), formatIngredientsForWidget());
         editor.apply();
-
-        // and let the widget know there is a new recentCake to display
-        Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        sendBroadcast(widgetIntent);
+//        widgetIntent();
 
         // Setup FAB to share the ingredients of the current cake
         FloatingActionButton fabShare = findViewById(R.id.share_fab);
@@ -129,13 +112,12 @@ public class DetailActivity extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.toolbar_layout);
         collapsingToolbar.setTitle(currentCake.getCakeName());
     }
-    //Since RecyclerView is not  supported for app widgets,
-    // I have to format ingredients differently then I did in RecyclerViewForIngredients
-//    private String formatIngredientsForWidget() {
-//        currentCake.getCakeIngredients();
-////        String[] ingredients = new String[recipeIngredients.length];
-//
-//    }
+
+    public void widgetIntent() {
+        // and let the widget know there is a new recentCake to display
+        Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        sendBroadcast(widgetIntent);
+    }
 
     private void setupRecyclerViewForIngredients(@NonNull RecyclerView recyclerView, List<Ingredient> ingredients) {
         recyclerView.setAdapter(new IngredientAdapter(this, ingredients));
@@ -173,6 +155,7 @@ public class DetailActivity extends AppCompatActivity {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(CURRENT_CAKE, currentCake);
         outState.putByteArray(IMAGE, byteArray);
+        widgetIntent();
         super.onSaveInstanceState(outState);
     }
 }
