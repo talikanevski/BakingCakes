@@ -3,20 +3,27 @@ package com.example.bakingcakes.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.bakingcakes.Activities.DetailActivity;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.R;
 
+import java.util.Collections;
 import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
     private Context mContext;
     private final List<Ingredient> ingredientList;
+    private Ingredient currentIngredient;
+    private Double quantity;
+    private String newMeasure;
+    private String ingredientsForWidget = "Ingredients:";
 
     public IngredientAdapter(Context context,
                              List<Ingredient> ingredients) {
@@ -49,22 +56,38 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        Ingredient currentIngredient = ingredientList.get(position);
-        Double quantity = currentIngredient.getIngredientQuantity();
+        currentIngredient = ingredientList.get(position);
+        quantity = currentIngredient.getIngredientQuantity();
 //        String newQuantity = quantityPolish(quantity);
 //        holder.quantityTv.setText(newQuantity + " ");
         holder.quantityTv.setText(quantity + " ");
         String measure = currentIngredient.getIngredientMeasure();
-        String newMeasure = measurePolish(measure,quantity);
-        holder.measureTv.setText( newMeasure + " ");
+        newMeasure = measurePolish(measure, quantity);
+        holder.measureTv.setText(newMeasure + " ");
         holder.ingredientTv.setText(currentIngredient.getIngredientName());
+
+        // save details to SharedPreferences for the widget to use
+        ingredientsForWidget = ingredientsForWidget + "\n"+ quantity + " " + newMeasure + " " + currentIngredient.getIngredientName();
+        DetailActivity.recentCake.edit().putString(mContext.getString(R.string.widget_ingredients), ingredientsForWidget).apply();
+
+    }
+
+    private String getIngredientsAsString() {
+        String widgetIngredients = new String();
+        widgetIngredients = quantity + " " + newMeasure + " " + currentIngredient.getIngredientName();
+
+//        for (int i = 0; i < widgetIngredients.length; i++) {
+//            widgetIngredients[i] = quantity + " " + newMeasure + " " + currentIngredient.getIngredientName();
+//        }
+        return (String) TextUtils.join("\n", Collections.singleton(widgetIngredients));
     }
 
     @Override
     public int getItemCount() {
         return ingredientList != null ? ingredientList.size() : 0;
     }
-//    public String quantityPolish (Double quantity){
+
+    //    public String quantityPolish (Double quantity){
 //        String polishedQuantity = null;
 //        if (quantity >1.0){
 //            String s = quantity.toString();

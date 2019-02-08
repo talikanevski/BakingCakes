@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
     </style>
@@ -15,11 +16,18 @@
     // https://stackoverflow.com/questions/29957822/changing-background-and-text-color-of-appcompat-light-darkactionbar-theme-on-and/29958006
     <style name="MyActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/colorAccent</item>
-
+        <item name="android:colorControlNormal">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
     </style>
 
+    <style name="ExpandedAppBar" parent="@android:style/TextAppearance">
+        <item name="android:textSize">60sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 </resources>

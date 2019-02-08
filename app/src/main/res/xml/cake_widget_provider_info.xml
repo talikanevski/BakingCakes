@@ -2,8 +2,8 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/cake_widget_provider"
     android:initialLayout="@layout/cake_widget_provider"
-    android:minWidth="180dp"
-    android:minHeight="250dp"
+    android:minWidth="160dp"
+    android:minHeight="180dp"
     android:previewImage="@drawable/example_appwidget_preview"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"></appwidget-provider>

@@ -17,6 +17,7 @@ import com.example.bakingcakes.R;
  */
 public class CakeWidgetProvider extends AppWidgetProvider {
 
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
@@ -26,11 +27,12 @@ public class CakeWidgetProvider extends AppWidgetProvider {
 
         // Get recent viewed Cake from SharedPreferences:
         SharedPreferences sharedPreferencesForWidget = context.getSharedPreferences(context.getString(R.string.pref_file_name), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
-        String cakeName = sharedPreferencesForWidget.getString(context.getString(R.string.cake_name_key), "");
-//        String cakeIngredients = sharedPreferencesForWidget.getString(context.getString(R.string.cake_ingredients_key), "");
-//        String cakeThumbnailUrl = sharedPreferencesForWidget.getString(context.getString(R.string.cake_thumbnail_url_key), "");
 
+        String cakeName = sharedPreferencesForWidget.getString(context.getString(R.string.cake_name_key), "");
         views.setTextViewText(R.id.appwidget_cake_name, cakeName);
+
+        String ingredients = sharedPreferencesForWidget.getString(context.getString(R.string.widget_ingredients), "");
+        views.setTextViewText(R.id.widget_ingredients, ingredients);
 
         // Create an Intent to launch MainActivity when clicked
         Intent intent = new Intent(context, MainActivity.class);

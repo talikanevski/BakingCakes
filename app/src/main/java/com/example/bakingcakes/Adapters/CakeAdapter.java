@@ -80,6 +80,7 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
                     intent.putExtra(DetailActivity.IMAGE, byteArray);
 
                     context.startActivity(intent);
+
                 }
             });
         }
