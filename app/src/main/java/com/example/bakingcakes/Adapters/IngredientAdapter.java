@@ -27,7 +27,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     public IngredientAdapter(Context context,
                              List<Ingredient> ingredients) {
         this.ingredientList = ingredients;
-        this.mContext = context;//TODO add boolean mTwoPane;
+        this.mContext = context;
     }
 
     @NonNull
@@ -58,8 +58,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         currentIngredient = ingredientList.get(position);
         quantity = currentIngredient.getIngredientQuantity();
-//        String newQuantity = quantityPolish(quantity);
-//        holder.quantityTv.setText(newQuantity + " ");
         holder.quantityTv.setText(quantity + " ");
         String measure = currentIngredient.getIngredientMeasure();
         newMeasure = measurePolish(measure, quantity);
@@ -70,7 +68,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
     //Since RecyclerView is not supported for app widgets,
     // I have to format ingredients for widget differently then I did in RecyclerViewForIngredients
-    // Also, I use this String to share ingredients via fab
+    // Also, I use this String ingredientsForWidget to share ingredients via fab
     private void saveIngredientsToOneString() {
         // save details to SharedPreferences for the widget to use
         ingredientsForWidget = ingredientsForWidget + "\n"+ quantity + " " + newMeasure + " " + currentIngredient.getIngredientName();
@@ -82,15 +80,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         return ingredientList != null ? ingredientList.size() : 0;
     }
 
-    //    public String quantityPolish (Double quantity){
-//        String polishedQuantity = null;
-//        if (quantity >1.0){
-//            String s = quantity.toString();
-//            String[] split = s.split(".");
-//            polishedQuantity = split[0];
-//        }
-//        return polishedQuantity;
-//    }
     private String measurePolish(String measure, Double quantity) {
         String polishedMeasure;
 

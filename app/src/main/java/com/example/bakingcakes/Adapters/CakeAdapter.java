@@ -21,13 +21,10 @@ import com.example.bakingcakes.R;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import static com.example.bakingcakes.Activities.DetailActivity.currentCake;
-
 public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
 
     private Context mContext;
     private final List<Cake> cakeList;
-    private final boolean mTwoPane;
     private Bitmap bitmap; // cake image NOT from the given JSON
 
     public CakeAdapter(Context context,
@@ -35,7 +32,6 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
                        boolean twoPane) {
         this.cakeList = cakes;
         this.mContext = context;
-        this.mTwoPane = twoPane;
     }
 
     @NonNull

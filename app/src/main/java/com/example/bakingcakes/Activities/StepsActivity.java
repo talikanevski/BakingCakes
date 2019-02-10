@@ -1,5 +1,6 @@
 package com.example.bakingcakes.Activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ public class StepsActivity extends AppCompatActivity {
     public static final String CURRENT_STEP = "current step";
     public static final String CURRENT_STEP_NUMBER = "current step number";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

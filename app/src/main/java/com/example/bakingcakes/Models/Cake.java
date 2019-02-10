@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class Cake implements Parcelable {
     private int cakeId;
     private String cakeName;

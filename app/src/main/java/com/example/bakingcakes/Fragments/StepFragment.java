@@ -66,8 +66,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     private Button forward;
     private TextView description;
     private ImageView imageView;
-    //    private MediaSessionCompat mMediaSession;
-//    private PlaybackStateCompat.Builder mStateBuilder;
     private AppBarLayout actionBar;
 
     public StepFragment() {
@@ -103,9 +101,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
         // Initialize the player.
         initializePlayer();
-
-        // Initialize the Media Session.
-//        initializeMediaSession();
 
         if (savedInstanceState == null) {
             Intent callingIntent = Objects.requireNonNull(getActivity()).getIntent();
@@ -196,39 +191,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         }
     }
 
-    // It creates the MediaSessionCompat object, sets the flags for external clients,TODO  Do I need it here? Because of this I'd changed gradle to a lower level - 27
-    // sets the available actions I want to support, and start the session.
-//    private void initializeMediaSession() {
-//
-//        // Create a MediaSessionCompat.
-//        mMediaSession = new MediaSessionCompat(getContext(), TAG);
-//
-//        // Enable callbacks from MediaButtons and TransportControls.
-//        mMediaSession.setFlags(
-//                MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
-//                        MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-//
-//        // Do not let MediaButtons restart the player when the app is not visible.
-//        mMediaSession.setMediaButtonReceiver(null);
-//
-//        // Set an initial PlaybackState with ACTION_PLAY, so media buttons can start the player.
-//        mStateBuilder = new PlaybackStateCompat.Builder()
-//                .setActions(
-//                        PlaybackStateCompat.ACTION_PLAY |
-//                                PlaybackStateCompat.ACTION_PAUSE |
-//                                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS |
-//                                PlaybackStateCompat.ACTION_PLAY_PAUSE);
-//
-//        mMediaSession.setPlaybackState(mStateBuilder.build());
-//
-//
-//        // MySessionCallback has methods that handle callbacks from a media controller.
-//        mMediaSession.setCallback(new MySessionCallback());
-//
-//        // Start the Media Session since the activity is active.
-//        mMediaSession.setActive(true);
-//    }
-
     /**
      * Release ExoPlayer.
      */
@@ -244,10 +206,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         releasePlayer();
-        // When the activity is destroyed, set the MediaSession to inactive.
-//        mMediaSession.setActive(false);
     }
 
     @Override
@@ -272,12 +231,8 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
         if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
             Log.d(TAG, "onPlayerStateChanged: PLAYING");
-//            mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
-//                    exoPlayer.getCurrentPosition(), 1f);
         } else if ((playbackState == ExoPlayer.STATE_READY)) {
             Log.d(TAG, "onPlayerStateChanged: PAUSED");
-//            mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
-//                    exoPlayer.getCurrentPosition(), 1f);
         }
     }
 
@@ -301,24 +256,4 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         }
         return super.onOptionsItemSelected(item);
     }
-//
-//    /**
-//     * Media Session Callbacks, where all external clients control the player.//TODO do I really need it?
-//     */
-//    private class MySessionCallback extends MediaSessionCompat.Callback {
-//        @Override
-//        public void onPlay() {
-//            exoPlayer.setPlayWhenReady(true);
-//        }
-//
-//        @Override
-//        public void onPause() {
-//            exoPlayer.setPlayWhenReady(false);
-//        }
-//
-//        @Override
-//        public void onSkipToPrevious() {
-//            exoPlayer.seekTo(0);
-//        }
-//    }
 }

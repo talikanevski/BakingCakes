@@ -4,21 +4,17 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.databinding.DataBindingUtil;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 
 import com.example.bakingcakes.Adapters.CakeAdapter;
@@ -26,6 +22,7 @@ import com.example.bakingcakes.CakeLoader;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.R;
 import com.example.bakingcakes.Utils;
+import com.example.bakingcakes.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,28 +47,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
-    private boolean mTwoPane;
-    private TextView mEmptyView;
     private View recyclerView;
+    private boolean mTwoPane;
+    private ActivityMainBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mBinding.toolbar);
 
-        toolbar.setTitle(getTitle());
-
-        //TODO
-//        if (findViewById(R.id.item_detail_container) != null) {
-//            // The detail container view will be present only in the
-//            // large-screen layouts (res/values-w900dp).
-//            // If this view is present, then the
-//            // activity should be in two-pane mode.
-//            mTwoPane = true;
-//        }
+        mBinding.toolbar.setTitle(getTitle());
 
         recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
@@ -112,8 +100,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             /* if internet connection got lost and than back, we'll see mEmptyView
               with text "no internet connection"
               we need to reload the app and while it's reloading it's better to see a spinner**/
-            mEmptyView = findViewById(R.id.empty_view);
-            mEmptyView.setOnClickListener(new View.OnClickListener() {
+            mBinding.emptyView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     reload();
@@ -123,15 +110,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             });
         } else {/* Otherwise, display error
          // First, hide loading indicator so error message will be visible**/
-            View loading = findViewById(R.id.loading_spinner);
-            loading.setVisibility(View.GONE);
+            mBinding.loadingSpinner.setVisibility(View.GONE);
 
             /* Update empty state with no connection error message**/
-            mEmptyView.setText(R.string.no_internet);
+            mBinding.emptyView.setText(R.string.no_internet);
         }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -147,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(Intent.createChooser(i, getString(R.string.share_text_for_chooser)));
             }
         });
-
     }
 
     @SuppressWarnings("unchecked")
@@ -174,25 +158,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (networkInfo != null && networkInfo.isConnected()) {
             // Set empty state text to display "No movies found."
-            mEmptyView.setText(R.string.no_cakes);
+            mBinding.emptyView.setText(R.string.no_cakes);
         } else// Update empty state with no connection error message
         {
-            mEmptyView.setText(R.string.no_internet);
+            mBinding.emptyView.setText(R.string.no_internet);
         }
 
         // If there is a valid list of cakes, then add them to the adapter's data set.
         // This will trigger the RecyclerView to update.
         if (cakes != null && !cakes.isEmpty()) {
             updateRecyclerView((RecyclerView) recyclerView, cakes);
-            mEmptyView.setVisibility(View.GONE);
+            mBinding.emptyView.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<Cake>> loader) {
         Log.i(LOG_TAG, "Test:  onLoaderReset called");
-
-//        mAdapter.notifyDataSetChanged();
     }
 
     private void reload() {

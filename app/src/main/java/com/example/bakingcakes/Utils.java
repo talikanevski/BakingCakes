@@ -32,7 +32,7 @@ import java.util.Scanner;
 public final class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
-    //in this project we were given JSON data about 4 recipes of cakes:
+    //in this project we were given JSON data about 4 recipes of cakes (only):
     public final static String GIVEN_JSON_DATA = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
     // for some reason in the GIVEN_JSON_DATA we don't have any cake images, thi final product,
@@ -98,7 +98,6 @@ public final class Utils {
         /* Return the list of cakes  **/
         return cakes;
     }
-
 
     public static String saveCakesNamesToShare() {
         // save cakes names to share from  the MainActivity

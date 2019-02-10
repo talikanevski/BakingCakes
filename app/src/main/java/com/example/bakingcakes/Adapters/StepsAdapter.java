@@ -30,7 +30,7 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
     public StepsAdapter(Context context,
                         List<Step> steps) {
         this.stepList = steps;
-        this.mContext = context;//TODO add boolean mTwoPane;
+        this.mContext = context;
     }
 
     @NonNull

@@ -2,17 +2,16 @@ package com.example.bakingcakes.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +23,7 @@ import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
-import com.example.bakingcakes.Utils;
+import com.example.bakingcakes.databinding.ActivityDetailBinding;
 
 import android.content.SharedPreferences;
 import android.appwidget.AppWidgetManager;
@@ -40,17 +39,18 @@ public class DetailActivity extends AppCompatActivity {
     public static Cake currentCake;
     private static byte[] byteArray;
     public static SharedPreferences recentCake;
+    private ActivityDetailBinding binding;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         //Providing Up navigation
-        final Toolbar toolbar = findViewById(R.id.detail_toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.detailToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        final ImageView imageView = findViewById(R.id.backdrop);
+        final ImageView imageView = binding.backdrop;
         if (savedInstanceState == null) {
             Intent intent = getIntent();
 
@@ -75,7 +75,7 @@ public class DetailActivity extends AppCompatActivity {
             imageView.setImageBitmap(bmp);
         }
 
-        TextView servings = findViewById(R.id.servings);
+        TextView servings = binding.servings;
         servings.setText(getString(R.string.yield) + currentCake.getServings() + getString(R.string._servings));
 
         List<Ingredient> ingredients = currentCake.getCakeIngredients();
@@ -93,8 +93,7 @@ public class DetailActivity extends AppCompatActivity {
         editor.apply();
 
         // Setup FAB to share the ingredients of the current cake
-        FloatingActionButton fabShare = findViewById(R.id.share_fab);
-        fabShare.setOnClickListener(new View.OnClickListener() {
+        binding.shareFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -109,8 +108,7 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(i, "Ingredients for " + currentCake.getCakeName()));
             }
         });
-        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.toolbar_layout);
-        collapsingToolbar.setTitle(currentCake.getCakeName());
+        binding.toolbarLayout.setTitle(currentCake.getCakeName());
     }
 
     private void widgetIntent() {
