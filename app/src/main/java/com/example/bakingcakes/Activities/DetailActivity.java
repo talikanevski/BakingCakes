@@ -76,7 +76,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         TextView servings = findViewById(R.id.servings);
-        servings.setText(getString(R.string.yeild) + currentCake.getServings() + getString(R.string._servings));
+        servings.setText(getString(R.string.yield) + currentCake.getServings() + getString(R.string._servings));
 
         List<Ingredient> ingredients = currentCake.getCakeIngredients();
         RecyclerView ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);

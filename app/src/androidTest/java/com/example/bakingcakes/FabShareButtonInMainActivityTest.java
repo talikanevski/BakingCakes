@@ -48,9 +48,10 @@ public class FabShareButtonInMainActivityTest {
 
     @Test
     public void clickShareButton() {
-
+        //when I click on share button in the MainActivity
         onView(withId(R.id.fab)).perform(click());
 
+        //it sends intent
         hasAction(Intent.ACTION_SEND);
 
     }

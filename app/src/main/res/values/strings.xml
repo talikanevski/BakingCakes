@@ -18,9 +18,12 @@
     <string name="cake_name">Cake name</string>
     <string name="cake_name_key" translatable="false">cake name</string>
     <string name="pref_file_name" translatable="false">prefs for widget</string>
-    <string name="yeild">Yield: </string>
+    <string name="yield">Yield: </string>
     <string name="widget_ingredients">widget ingredients</string>
     <string name="exo_prev">exo prev</string>
+    <string name="exoplay">exoplay</string>
+    <string name="pause">pause</string>
+    <string name="exopause">exopause</string>
 
 
 </resources>

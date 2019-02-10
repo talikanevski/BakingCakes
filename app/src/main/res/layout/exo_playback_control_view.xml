@@ -48,14 +48,14 @@
             android:layout_marginStart="@dimen/left_margin"
             android:layout_toEndOf="@id/exo_prev"
             android:layout_marginTop="@dimen/top_margin"
-             />
+            android:contentDescription="@string/exoplay" />
 
         <ImageButton android:id="@id/exo_pause"
             style="@style/ExoMediaButton.Pause"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/exo_prev"
             android:layout_marginTop="@dimen/top_margin"
-             />
+            android:contentDescription="@string/pause" />
 
         <TextView android:id="@id/exo_position"
             android:layout_width="wrap_content"
@@ -66,7 +66,8 @@
             android:paddingRight="@dimen/padding"
             android:layout_alignParentTop="true"
             android:textStyle="bold"
-            android:layout_toStartOf="@id/tv_time_slash"/>
+            android:layout_toStartOf="@id/tv_time_slash"
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             android:layout_width="wrap_content"

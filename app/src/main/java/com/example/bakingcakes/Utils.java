@@ -28,6 +28,7 @@ import java.util.Scanner;
 /**
  * Helper methods related to requesting and receiving Cake detailed from the given json.
  */
+@SuppressWarnings("StringConcatenationInLoop")
 public final class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
