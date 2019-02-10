@@ -2,11 +2,16 @@ package com.example.bakingcakes.Activities;
 
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +25,7 @@ import com.example.bakingcakes.Adapters.CakeAdapter;
 import com.example.bakingcakes.CakeLoader;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.R;
+import com.example.bakingcakes.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,16 +63,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setSupportActionBar(toolbar);
 
         toolbar.setTitle(getTitle());
-
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Make it SHARE button?", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         //TODO
 //        if (findViewById(R.id.item_detail_container) != null) {
@@ -133,6 +129,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             /* Update empty state with no connection error message**/
             mEmptyView.setText(R.string.no_internet);
         }
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+                }
+                i.putExtra(Intent.EXTRA_SUBJECT, "Honey, I am going to bake a cake, which one would you prefer: ");
+                i.putExtra(Intent.EXTRA_TEXT, "Honey, I am going to bake a cake, which one would you prefer: " +
+                       Utils.cakesNamesToShare + "?");
+                startActivity(Intent.createChooser(i, getString(R.string.share_text_for_chooser)));
+            }
+        });
+
     }
 
     @SuppressWarnings("unchecked")

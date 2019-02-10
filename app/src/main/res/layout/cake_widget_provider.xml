@@ -1,10 +1,13 @@
+<!--suppress ALL -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appwidget_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/almostWhite"
     android:orientation="vertical"
-    android:padding="@dimen/widget_margin">
+    android:padding="@dimen/widget_margin"
+    tools:ignore="Overdraw">
 
     <TextView
         android:id="@+id/appwidget_app_name"
@@ -46,7 +49,6 @@
         android:id="@+id/widget_ingredients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="@drawable/card">
-        android:textSize="13sp"></TextView>
+        android:background="@drawable/card"
+        android:padding="16dp"></TextView>
 </LinearLayout>

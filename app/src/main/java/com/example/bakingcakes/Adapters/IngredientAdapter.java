@@ -1,11 +1,9 @@
 package com.example.bakingcakes.Adapters;
 
-import android.appwidget.AppWidgetManager;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,6 @@ import com.example.bakingcakes.Activities.DetailActivity;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.R;
 
-import java.util.Collections;
 import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
@@ -25,7 +22,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     private Ingredient currentIngredient;
     private Double quantity;
     private String newMeasure;
-    private String ingredientsForWidget = "Ingredients:";
+    public static String ingredientsForWidget = "Ingredients:";
 
     public IngredientAdapter(Context context,
                              List<Ingredient> ingredients) {
@@ -54,9 +51,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             measureTv = view.findViewById(R.id.measure_tv);
             ingredientTv = view.findViewById(R.id.ingredient_tv);
         }
-
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         currentIngredient = ingredientList.get(position);
@@ -68,12 +65,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         newMeasure = measurePolish(measure, quantity);
         holder.measureTv.setText(newMeasure + " ");
         holder.ingredientTv.setText(currentIngredient.getIngredientName());
-        saveIngredientsToWidget();
+        saveIngredientsToOneString();
     }
 
     //Since RecyclerView is not supported for app widgets,
     // I have to format ingredients for widget differently then I did in RecyclerViewForIngredients
-    public void saveIngredientsToWidget() {
+    // Also, I use this String to share ingredients via fab
+    private void saveIngredientsToOneString() {
         // save details to SharedPreferences for the widget to use
         ingredientsForWidget = ingredientsForWidget + "\n"+ quantity + " " + newMeasure + " " + currentIngredient.getIngredientName();
         DetailActivity.recentCake.edit().putString(mContext.getString(R.string.widget_ingredients), ingredientsForWidget).apply();

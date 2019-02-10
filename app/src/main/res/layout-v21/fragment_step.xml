@@ -29,7 +29,6 @@
             tools:ignore="MissingConstraints" />
 
         <ProgressBar
-            android:id="@+id/progress_bar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
@@ -47,20 +46,17 @@
             app:layout_constraintTop_toTopOf="@+id/exoPlayerView" />
 
         <View
-            android:id="@+id/v_center"
             android:layout_width="2dp"
             android:layout_height="0dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="@+id/exoPlayerView"
             app:layout_constraintStart_toStartOf="@+id/exoPlayerView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -71,11 +67,9 @@
                 android:id="@+id/back"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_toLeftOf="@id/forward"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:drawableLeft="@drawable/back"
+                android:drawableStart="@drawable/back"
                 android:text="@string/previous_step"
                 android:textColor="@android:color/white" />
 
@@ -83,12 +77,9 @@
                 android:id="@+id/forward"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/step_thumbnail"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/back"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:drawableRight="@drawable/forward"
+                android:drawableEnd="@drawable/forward"
                 android:text="@string/next_step"
                 android:textColor="@android:color/white" />
         </LinearLayout>
@@ -97,7 +88,6 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_margin="25sp"
             android:layout_marginBottom="8dp"
             android:lineSpacingMultiplier="1.1"

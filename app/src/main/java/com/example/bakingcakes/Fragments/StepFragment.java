@@ -1,5 +1,6 @@
 package com.example.bakingcakes.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,8 +10,6 @@ import android.support.v4.app.Fragment;
 //import android.support.v4.media.session.MediaSessionCompat;
 //import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -130,6 +129,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         return rootView;
     }
 
+    @SuppressLint("SetTextI18n")
     private void setUp(int stepN) {
         exoPlayer.stop();
 

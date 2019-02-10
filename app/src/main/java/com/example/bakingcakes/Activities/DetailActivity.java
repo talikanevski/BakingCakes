@@ -1,9 +1,7 @@
 package com.example.bakingcakes.Activities;
 
-import android.appwidget.AppWidgetManager;
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -12,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +24,7 @@ import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
+import com.example.bakingcakes.Utils;
 
 import android.content.SharedPreferences;
 import android.appwidget.AppWidgetManager;
@@ -40,9 +38,10 @@ public class DetailActivity extends AppCompatActivity {
     public static final String CURRENT_CAKE = "current cake";
     public static final String IMAGE = "image";
     public static Cake currentCake;
-    public static byte[] byteArray;
+    private static byte[] byteArray;
     public static SharedPreferences recentCake;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +70,7 @@ public class DetailActivity extends AppCompatActivity {
             //retrieve the Bitmap
             Bitmap bmp;
             byteArray = savedInstanceState.getByteArray(IMAGE);
-            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            bmp = BitmapFactory.decodeByteArray(byteArray, 0, Objects.requireNonNull(byteArray).length);
             assert currentCake != null;
             imageView.setImageBitmap(bmp);
         }
@@ -92,28 +91,29 @@ public class DetailActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = recentCake.edit();
         editor.putString(getString(R.string.cake_name_key), currentCake.getCakeName());
         editor.apply();
-//        widgetIntent();
 
         // Setup FAB to share the ingredients of the current cake
         FloatingActionButton fabShare = findViewById(R.id.share_fab);
         fabShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
                 }
                 i.putExtra(Intent.EXTRA_SUBJECT, currentCake.getCakeName());
-                i.putExtra(Intent.EXTRA_TEXT, currentCake.getCakeIngredients().toArray()); //TODO doesn't work yet - improve
-                startActivity(Intent.createChooser(i, getString(R.string.share_text_for_chooser) + currentCake.getCakeName()));
+                i.putExtra(Intent.EXTRA_TEXT, currentCake.getCakeName()
+                        + ".\n" + IngredientAdapter.ingredientsForWidget);
+                startActivity(Intent.createChooser(i, "Ingredients for " + currentCake.getCakeName()));
             }
         });
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.toolbar_layout);
         collapsingToolbar.setTitle(currentCake.getCakeName());
     }
 
-    public void widgetIntent() {
+    private void widgetIntent() {
         // and let the widget know there is a new recentCake to display
         Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         sendBroadcast(widgetIntent);

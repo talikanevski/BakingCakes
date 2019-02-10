@@ -45,18 +45,17 @@
         <ImageButton android:id="@id/exo_play"
             style="@style/ExoMediaButton.Play"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/left_margin"
-            android:layout_toRightOf="@id/exo_prev"
+            android:layout_marginStart="@dimen/left_margin"
+            android:layout_toEndOf="@id/exo_prev"
             android:layout_marginTop="@dimen/top_margin"
-            android:contentDescription="@string/exo_play" />
+             />
 
         <ImageButton android:id="@id/exo_pause"
             style="@style/ExoMediaButton.Pause"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/exo_prev"
-            android:layout_marginLeft="@dimen/left_margin"
+            android:layout_toEndOf="@id/exo_prev"
             android:layout_marginTop="@dimen/top_margin"
-            android:contentDescription="@string/exo_pause" />
+             />
 
         <TextView android:id="@id/exo_position"
             android:layout_width="wrap_content"
@@ -67,19 +66,20 @@
             android:paddingRight="@dimen/padding"
             android:layout_alignParentTop="true"
             android:textStyle="bold"
-            android:layout_toLeftOf="@id/tv_time_slash"/>
+            android:layout_toStartOf="@id/tv_time_slash"/>
 
-        <TextView android:id="@+id/tv_time_slash"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/slash"
+            android:text="/"
             android:textSize="@dimen/text_size"
             android:textStyle="bold"
             android:paddingLeft="@dimen/padding"
             android:paddingRight="@dimen/padding"
             android:textColor="@android:color/white"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/exo_duration"/>
+            android:layout_toStartOf="@id/exo_duration"
+            tools:ignore="HardcodedText" />
 
         <TextView android:id="@id/exo_duration"
             android:layout_width="wrap_content"
@@ -88,10 +88,10 @@
             android:textStyle="bold"
             android:paddingLeft="@dimen/padding"
             android:paddingRight="@dimen/padding"
-            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginEnd="@dimen/margin_right"
             android:textColor="@android:color/white"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
 

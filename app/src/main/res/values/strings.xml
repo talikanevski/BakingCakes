@@ -1,37 +1,26 @@
 <resources>
     <string name="app_name">BakingCakes</string>
-    <string name="title_item_detail">Item Detail</string>
     <string name="no_internet">No internet connection</string>
     <string name="no_cakes">No Cakes updates available, please reload the app or check after some time.</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
-    <string name="directions">Get Directions</string>
-    <string name="share_text_for_chooser">Share ingredients for :</string>
+    <string name="share_text_for_chooser">Honey, I am going to bake a cake, which one would you prefer: </string>
+
+
     <string name="previous_step">Previous Step</string>
     <string name="next_step">Next Step</string>
     <string name="backdrop">backdrop</string>
     <string name="image">image</string>
-    <string name="exo_prev">exo_prev</string>
-    <string name="exo_pause">exo_pause</string>
-    <string name="slash">/</string>
     <string name="step_thumbnail">step_thumbnail</string>
     <string name="textview">TextView</string>
     <string name="_servings">servings</string>
-    <string name="exo_play">exo_play</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
     <string name="image_cake">image_cake</string>
     <string name="appwidget_cake_name">appwidget_cake_name</string>
     <string name="cake_name">Cake name</string>
-    <string name="cake_for_widget">recent cake for widget</string>
     <string name="cake_name_key" translatable="false">cake name</string>
-    <string name="cake_ingredients_key" translatable="false">cake ingredients</string>
-    <string name="cake_thumbnail" translatable="false">cake thumbnail</string>
     <string name="pref_file_name" translatable="false">prefs for widget</string>
-    <string name="yeild">Yield:</string>
-    <string name="widget_quantity">quantity</string>
-    <string name="widget_measure">measure</string>
-    <string name="widget_ingredient_name">ingredient name</string>
+    <string name="yeild">Yield: </string>
     <string name="widget_ingredients">widget ingredients</string>
+    <string name="exo_prev">exo prev</string>
 
 
 </resources>

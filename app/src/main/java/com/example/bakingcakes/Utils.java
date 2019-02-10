@@ -43,6 +43,7 @@ public final class Utils {
 
     //this one from here: https://unsplash.com/photos/B4QQAYBn8fU :
     private final static String YELLOW_CAKE_URL = "https://user-images.githubusercontent.com/36941009/52075772-f977f100-2541-11e9-8260-1fa604a77ddc.jpg";
+    public static String cakesNamesToShare;
 
     private Utils() {
     }
@@ -52,6 +53,7 @@ public final class Utils {
         String cakeName;
         String servings;
         String cakeImage;
+        cakesNamesToShare = "";
 
         /*If the JSON string is empty or null, then return early.**/
         if (TextUtils.isEmpty(jsonResponse)) {
@@ -79,6 +81,9 @@ public final class Utils {
 
                 cakeImage = setUpImage(cakeId);
 
+                // save cakes names to share via fab from the MainActivity
+                cakesNamesToShare = cakesNamesToShare + "\n" + cakeName;
+
                 Cake cake = new Cake(cakeId, cakeName, listOfIngredients, steps, servings, convertToBitmapImage(cakeImage));
                 cakes.add(cake);
             }
@@ -92,6 +97,13 @@ public final class Utils {
         /* Return the list of cakes  **/
         return cakes;
     }
+
+
+    public static String saveCakesNamesToShare() {
+        // save cakes names to share from  the MainActivity
+        return cakesNamesToShare;
+    }
+
 
     private static String setUpImage(int cakeId) {
 

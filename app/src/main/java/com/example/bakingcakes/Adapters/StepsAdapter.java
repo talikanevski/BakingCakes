@@ -1,5 +1,6 @@
 package com.example.bakingcakes.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -67,6 +68,7 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final StepsAdapter.ViewHolder holder, int position) {
         Step currentStep = stepList.get(position);

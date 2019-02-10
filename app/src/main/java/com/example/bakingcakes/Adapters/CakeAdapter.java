@@ -21,6 +21,8 @@ import com.example.bakingcakes.R;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+import static com.example.bakingcakes.Activities.DetailActivity.currentCake;
+
 public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
 
     private Context mContext;
@@ -78,7 +80,6 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
                     byte[] byteArray = bStream.toByteArray();
                     intent.putExtra(DetailActivity.IMAGE, byteArray);
-
                     context.startActivity(intent);
 
                 }
