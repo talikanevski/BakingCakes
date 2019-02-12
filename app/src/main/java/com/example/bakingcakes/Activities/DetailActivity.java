@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.bakingcakes.Adapters.IngredientAdapter;
 import com.example.bakingcakes.Adapters.StepsAdapter;
+import com.example.bakingcakes.Fragments.DetailsFragment;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.Models.Step;
@@ -76,13 +77,5 @@ public class DetailActivity extends AppCompatActivity {
                 onBackPressed();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(CURRENT_CAKE, currentCake);
-        outState.putByteArray(IMAGE, byteArray);
-//        widgetIntent();
-        super.onSaveInstanceState(outState);
     }
 }

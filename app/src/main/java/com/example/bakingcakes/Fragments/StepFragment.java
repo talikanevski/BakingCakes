@@ -51,7 +51,6 @@ import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP_NUMB
 //import android.support.v4.media.session.MediaSessionCompat;
 
 
-
 public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
     private static final String TAG = StepFragment.class.getSimpleName();
@@ -139,7 +138,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
         } else {
             back.setVisibility(View.VISIBLE);
-            description.setText( "Step " + step.getStepDescription());
+            description.setText("Step " + step.getStepDescription());
 
             assert actionBar != null;
         }
@@ -227,6 +226,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             releasePlayer();
         }
     }
+
     /**
      * Release ExoPlayer.
      */
@@ -242,7 +242,10 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        releasePlayer();
+        if (exoPlayer != null) {
+            exoPlayerPosition = exoPlayer.getCurrentPosition();
+            releasePlayer();
+        }
     }
 
     @Override
