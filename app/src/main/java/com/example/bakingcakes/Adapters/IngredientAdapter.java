@@ -19,10 +19,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
     private Context mContext;
     private final List<Ingredient> ingredientList;
-    private Ingredient currentIngredient;
-    private Double quantity;
-    private String newMeasure;
-    public static String ingredientsForWidget = "Ingredients:";
+    public static final String ingredientsForWidget = "Ingredients:";
 
     public IngredientAdapter(Context context,
                              List<Ingredient> ingredients) {
@@ -56,11 +53,11 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        currentIngredient = ingredientList.get(position);
-        quantity = currentIngredient.getIngredientQuantity();
+        Ingredient currentIngredient = ingredientList.get(position);
+        Double quantity = currentIngredient.getIngredientQuantity();
         holder.quantityTv.setText(quantity + " ");
         String measure = currentIngredient.getIngredientMeasure();
-        newMeasure = measurePolish(measure, quantity);
+        String newMeasure = measurePolish(measure, quantity);
         holder.measureTv.setText(newMeasure + " ");
         holder.ingredientTv.setText(currentIngredient.getIngredientName());
         saveIngredientsToOneString();
@@ -71,8 +68,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     // Also, I use this String ingredientsForWidget to share ingredients via fab
     private void saveIngredientsToOneString() {
         // save details to SharedPreferences for the widget to use
-        ingredientsForWidget = ingredientsForWidget + "\n"+ quantity + " " + newMeasure + " " + currentIngredient.getIngredientName();
-        DetailActivity.recentCake.edit().putString(mContext.getString(R.string.widget_ingredients), ingredientsForWidget).apply();
+//        ingredientsForWidget = ingredientsForWidget + "\n"+ quantity + " " + newMeasure + " " + currentIngredient.getIngredientName();
+//        DetailActivity.recentCake.edit().putString(mContext.getString(R.string.widget_ingredients), ingredientsForWidget).apply();
     }
 
     @Override

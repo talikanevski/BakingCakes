@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -32,6 +33,8 @@ import android.content.Context;
 import java.util.List;
 import java.util.Objects;
 
+import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP_NUMBER;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String CURRENT_CAKE = "current cake";
@@ -46,83 +49,10 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-        //Providing Up navigation
-        setSupportActionBar(binding.detailToolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        final ImageView imageView = binding.backdrop;
-        if (savedInstanceState == null) {
-            Intent intent = getIntent();
 
-            if (intent.getExtras() != null) {
-                currentCake = intent.getExtras().getParcelable(CURRENT_CAKE);
-
-                //retrieve the Bitmap from the intent
-                Bitmap bmp;
-                byteArray = getIntent().getByteArrayExtra(IMAGE);
-                bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                assert currentCake != null;
-                imageView.setImageBitmap(bmp);
-            }
-
-        } else {
-            currentCake = savedInstanceState.getParcelable(CURRENT_CAKE);
-            //retrieve the Bitmap
-            Bitmap bmp;
-            byteArray = savedInstanceState.getByteArray(IMAGE);
-            bmp = BitmapFactory.decodeByteArray(byteArray, 0, Objects.requireNonNull(byteArray).length);
-            assert currentCake != null;
-            imageView.setImageBitmap(bmp);
-        }
-
-        TextView servings = binding.servings;
-        servings.setText(getString(R.string.yield) + currentCake.getServings() + getString(R.string._servings));
-
-        List<Ingredient> ingredients = currentCake.getCakeIngredients();
-        RecyclerView ingredientsRecyclerView = findViewById(R.id.ingredients_item_list);
-        setupRecyclerViewForIngredients(ingredientsRecyclerView, ingredients);
-
-        List<Step> steps = currentCake.getSteps();
-        RecyclerView stepsRecyclerView = findViewById(R.id.steps_item_list);
-        setupRecyclerViewForSteps(stepsRecyclerView, steps);
-
-        // save selected recipe details to SharedPreferences for the widget to use
-        recentCake = getSharedPreferences(getString(R.string.pref_file_name), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
-        SharedPreferences.Editor editor = recentCake.edit();
-        editor.putString(getString(R.string.cake_name_key), currentCake.getCakeName());
-        editor.apply();
-
-        // Setup FAB to share the ingredients of the current cake
-        binding.shareFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-                }
-                i.putExtra(Intent.EXTRA_SUBJECT, currentCake.getCakeName());
-                i.putExtra(Intent.EXTRA_TEXT, currentCake.getCakeName()
-                        + ".\n" + IngredientAdapter.ingredientsForWidget);
-                startActivity(Intent.createChooser(i, "Ingredients for " + currentCake.getCakeName()));
-            }
-        });
-        binding.toolbarLayout.setTitle(currentCake.getCakeName());
-    }
-
-    private void widgetIntent() {
-        // and let the widget know there is a new recentCake to display
-        Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        sendBroadcast(widgetIntent);
-    }
-
-    private void setupRecyclerViewForIngredients(@NonNull RecyclerView recyclerView, List<Ingredient> ingredients) {
-        recyclerView.setAdapter(new IngredientAdapter(this, ingredients));
-    }
-
-    private void setupRecyclerViewForSteps(@NonNull RecyclerView recyclerView, List<Step> steps) {
-        recyclerView.setAdapter(new StepsAdapter(this, steps));
+        Intent intent = getIntent();
+        currentCake = Objects.requireNonNull(intent.getExtras()).getParcelable(CURRENT_CAKE);
+        byteArray = getIntent().getByteArrayExtra(IMAGE);
     }
 
     @Override //Providing Up navigation
@@ -144,7 +74,6 @@ public class DetailActivity extends AppCompatActivity {
 
                 //last option
                 onBackPressed();
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -153,7 +82,7 @@ public class DetailActivity extends AppCompatActivity {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(CURRENT_CAKE, currentCake);
         outState.putByteArray(IMAGE, byteArray);
-        widgetIntent();
+//        widgetIntent();
         super.onSaveInstanceState(outState);
     }
 }
