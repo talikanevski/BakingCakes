@@ -139,10 +139,11 @@ public class DetailsFragment extends Fragment {
         setupRecyclerViewForSteps(stepsRecyclerView, steps);
 
         // save selected recipe details to SharedPreferences for the widget to use
-//        recentCake = getSharedPreferences(getString(R.string.pref_file_name), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
-//        SharedPreferences.Editor editor = recentCake.edit();
-//        editor.putString(getString(R.string.cake_name_key), currentCake.getCakeName());
-//        editor.apply();
+        recentCake =  getContext().getSharedPreferences(getString(R.string.pref_file_name),
+                        Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+        SharedPreferences.Editor editor = recentCake.edit();
+        editor.putString(getString(R.string.cake_name_key), currentCake.getCakeName());
+        editor.apply();
 
         // Setup FAB to share the ingredients of the current cake
         FloatingActionButton fabShare = rootView.findViewById(R.id.share_fab);
@@ -169,7 +170,7 @@ public class DetailsFragment extends Fragment {
     private void widgetIntent() {
         // and let the widget know there is a new recentCake to display
         Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//        sendBroadcast(widgetIntent);
+        ((AppCompatActivity)getActivity()).sendBroadcast(widgetIntent);
     }
 
     private void setupRecyclerViewForIngredients(@NonNull RecyclerView
