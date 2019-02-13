@@ -115,7 +115,7 @@ public class DetailsFragment extends Fragment {
 
         List<Step> steps = currentCake.getSteps();
         RecyclerView stepsRecyclerView = rootView.findViewById(R.id.steps_item_list);
-        setupRecyclerViewForSteps(stepsRecyclerView, steps);
+            setupRecyclerViewForSteps(stepsRecyclerView, steps);
 
         // save selected recipe details to SharedPreferences for the widget to use
         recentCake =  getContext().getSharedPreferences(getString(R.string.pref_file_name),

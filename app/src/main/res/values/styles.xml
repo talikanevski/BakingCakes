@@ -23,7 +23,7 @@
     </style>
 
     <style name="ExpandedAppBar" parent="@android:style/TextAppearance">
-        <item name="android:textSize">50sp</item>
+        <item name="android:textSize">40sp</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 

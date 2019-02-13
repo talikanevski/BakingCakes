@@ -34,7 +34,6 @@ public class DetailActivity extends AppCompatActivity implements DetailsFragment
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
 
         Intent intent = getIntent();
         currentCake = Objects.requireNonNull(intent.getExtras()).getParcelable(CURRENT_CAKE);
@@ -44,6 +43,9 @@ public class DetailActivity extends AppCompatActivity implements DetailsFragment
         } else {
             mTwoPane = false;
         }
+
+        setContentView(R.layout.activity_detail);
+
     }
 
     @Override //Providing Up navigation
@@ -76,19 +78,12 @@ public class DetailActivity extends AppCompatActivity implements DetailsFragment
                     (StepFragment) getSupportFragmentManager().findFragmentById(R.id.tablet_details_fragment);
             stepFragment.setUp(position);
         }
-//        else {
-//            Intent intent = new Intent(this, StepsActivity.class);
-//            intent.putExtra(getString(R.string.recipe_key), mRecipe);
-//            intent.putExtra(getString(R.string.which_step_key), whichStep);
-//            startActivity(intent);
-//        }
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(CURRENT_CAKE, currentCake);
         outState.putByteArray(IMAGE, byteArray);
-//        DetailsFragment.widgetIntent();
         super.onSaveInstanceState(outState);
     }
 }

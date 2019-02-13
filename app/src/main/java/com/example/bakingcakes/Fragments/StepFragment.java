@@ -108,19 +108,18 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             if (callingIntent.hasExtra(CURRENT_STEP)) {
                 step = callingIntent.getParcelableExtra(CURRENT_STEP);
                 stepNumber = callingIntent.getIntExtra(CURRENT_STEP_NUMBER, 0);
-                cake = callingIntent.getParcelableExtra(DetailActivity.CURRENT_CAKE);
             }
+            cake = callingIntent.getParcelableExtra(DetailActivity.CURRENT_CAKE);
+            stepList = cake.getSteps();
+
         } else {
             step = savedInstanceState.getParcelable(CURRENT_STEP);
             stepNumber = savedInstanceState.getInt(CURRENT_STEP_NUMBER);
             cake = savedInstanceState.getParcelable(DetailActivity.CURRENT_CAKE);
             exoPlayerPosition = savedInstanceState.getLong(CURRENT_STEP_NUMBER);
+            stepList = cake.getSteps();
         }
-
-        stepList = cake.getSteps();
-
         setUp(stepNumber);
-
         return rootView;
     }
 
