@@ -68,16 +68,14 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra(DetailActivity.CURRENT_CAKE, currentCake);
+
                     //passing Bitmap
                     bitmap = currentCake.getCakeImage();
-
                     ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
                     byte[] byteArray = bStream.toByteArray();
                     intent.putExtra(DetailActivity.IMAGE, byteArray);
                     context.startActivity(intent);
-
                 }
             });
         }

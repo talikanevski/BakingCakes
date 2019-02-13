@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -56,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        if (findViewById(R.id.tablet_main_layout) != null) {
+            mTwoPane = true;
+
+        } else {
+            mTwoPane = false;
+        }
 
         setSupportActionBar(mBinding.toolbar);
 
@@ -183,9 +190,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new CakeAdapter(this, new ArrayList<Cake>(), mTwoPane));
+        if(mTwoPane) {// 2- how many rows in the grid view
+            recyclerView.setLayoutManager
+                    (new GridLayoutManager(recyclerView.getContext(), 2));
+        }
     }
 
     private void updateRecyclerView(@NonNull RecyclerView recyclerView, List<Cake> cakes) {
         recyclerView.setAdapter(new CakeAdapter(this,  cakes, mTwoPane));
+        if(mTwoPane) {// 2- how many rows in the grid view
+            recyclerView.setLayoutManager
+                    (new GridLayoutManager(recyclerView.getContext(), 2));
+        }
     }
 }

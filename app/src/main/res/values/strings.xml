@@ -23,6 +23,6 @@
     <string name="exoplay">exoplay</string>
     <string name="pause">pause</string>
     <string name="exopause">exopause</string>
-
+    <string name="must_implement_onstepclicklistener">must implement OnStepClickListener</string>
 
 </resources>

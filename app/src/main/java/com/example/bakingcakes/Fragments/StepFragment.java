@@ -125,7 +125,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     @SuppressLint("SetTextI18n")
-    private void setUp(int stepN) {
+    public void setUp(int stepN) {
         exoPlayer.stop();
 
         stepNumber = stepN;
@@ -250,17 +250,14 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
     @Override
     public void onTimelineChanged(Timeline timeline, Object manifest) {
-
     }
 
     @Override
     public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
     }
 
     @Override
     public void onLoadingChanged(boolean isLoading) {
-
     }
 
     //this is an ExoPlayer.EventListener
@@ -277,12 +274,10 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
     @Override
     public void onPlayerError(ExoPlaybackException error) {
-
     }
 
     @Override
     public void onPositionDiscontinuity() {
-
     }
 
     @Override //Providing Up navigation

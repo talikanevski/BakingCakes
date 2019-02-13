@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.bakingcakes.Activities.DetailActivity;
 import com.example.bakingcakes.Activities.StepsActivity;
 
+import com.example.bakingcakes.Fragments.DetailsFragment;
 import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
 
@@ -22,7 +23,7 @@ import java.util.List;
 
 import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP_NUMBER;
 
-public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
+    public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
 
     private Context mContext;
     private final List<Step> stepList;
@@ -61,6 +62,7 @@ public class StepsAdapter extends Adapter<StepsAdapter.ViewHolder> {
                     intent.putExtra(StepsActivity.CURRENT_STEP, currentStep);
                     intent.putExtra(CURRENT_STEP_NUMBER, currentStep.getStepId());
                     intent.putExtra(DetailActivity.CURRENT_CAKE, DetailActivity.currentCake);
+                    DetailsFragment.mStepCallback.onStepSelected(currentStep.getStepId());
 
                     context.startActivity(intent);
                 }

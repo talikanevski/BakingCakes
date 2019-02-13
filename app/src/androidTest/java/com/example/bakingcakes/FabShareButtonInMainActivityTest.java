@@ -23,8 +23,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 import static org.hamcrest.core.IsNot.not;
 
-
-
 @RunWith(AndroidJUnit4.class)
 public class FabShareButtonInMainActivityTest {
 
@@ -53,7 +51,5 @@ public class FabShareButtonInMainActivityTest {
 
         //it sends intent
         hasAction(Intent.ACTION_SEND);
-
     }
-
 }

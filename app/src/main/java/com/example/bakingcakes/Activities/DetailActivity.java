@@ -2,41 +2,25 @@ package com.example.bakingcakes.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
-import com.example.bakingcakes.Adapters.IngredientAdapter;
-import com.example.bakingcakes.Adapters.StepsAdapter;
 import com.example.bakingcakes.Fragments.DetailsFragment;
+import com.example.bakingcakes.Fragments.StepFragment;
 import com.example.bakingcakes.Models.Cake;
-import com.example.bakingcakes.Models.Ingredient;
-import com.example.bakingcakes.Models.Step;
 import com.example.bakingcakes.R;
 import com.example.bakingcakes.databinding.ActivityDetailBinding;
 
 import android.content.SharedPreferences;
-import android.appwidget.AppWidgetManager;
-import android.content.Context;
 
-import java.util.List;
 import java.util.Objects;
 
-import static com.example.bakingcakes.Activities.StepsActivity.CURRENT_STEP_NUMBER;
-
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements DetailsFragment.OnStepClickListener{
 
     public static final String CURRENT_CAKE = "current cake";
     public static final String IMAGE = "image";
@@ -44,6 +28,7 @@ public class DetailActivity extends AppCompatActivity {
     private static byte[] byteArray;
     public static SharedPreferences recentCake;
     private ActivityDetailBinding binding;
+    private boolean mTwoPane;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -54,6 +39,11 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         currentCake = Objects.requireNonNull(intent.getExtras()).getParcelable(CURRENT_CAKE);
         byteArray = getIntent().getByteArrayExtra(IMAGE);
+        if (findViewById(R.id.tablet_details_fragment) != null) {
+            mTwoPane = true;
+        } else {
+            mTwoPane = false;
+        }
     }
 
     @Override //Providing Up navigation
@@ -77,5 +67,28 @@ public class DetailActivity extends AppCompatActivity {
                 onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStepSelected(int position) {
+        if (mTwoPane) {
+            StepFragment stepFragment =
+                    (StepFragment) getSupportFragmentManager().findFragmentById(R.id.tablet_details_fragment);
+            stepFragment.setUp(position);
+        }
+//        else {
+//            Intent intent = new Intent(this, StepsActivity.class);
+//            intent.putExtra(getString(R.string.recipe_key), mRecipe);
+//            intent.putExtra(getString(R.string.which_step_key), whichStep);
+//            startActivity(intent);
+//        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable(CURRENT_CAKE, currentCake);
+        outState.putByteArray(IMAGE, byteArray);
+//        DetailsFragment.widgetIntent();
+        super.onSaveInstanceState(outState);
     }
 }

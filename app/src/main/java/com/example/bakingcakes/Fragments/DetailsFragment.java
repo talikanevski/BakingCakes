@@ -2,80 +2,37 @@ package com.example.bakingcakes.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.bakingcakes.Activities.DetailActivity;
 import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.R;
-import com.example.bakingcakes.databinding.FragmentDetailsBinding;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.bakingcakes.Adapters.IngredientAdapter;
 import com.example.bakingcakes.Adapters.StepsAdapter;
-import com.example.bakingcakes.Models.Cake;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.Models.Step;
-import com.example.bakingcakes.R;
-import com.example.bakingcakes.databinding.ActivityDetailBinding;
 
-import android.content.SharedPreferences;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.example.bakingcakes.Adapters.IngredientAdapter;
-import com.example.bakingcakes.Adapters.StepsAdapter;
-import com.example.bakingcakes.Models.Cake;
-import com.example.bakingcakes.Models.Ingredient;
-import com.example.bakingcakes.Models.Step;
-import com.example.bakingcakes.R;
-import com.example.bakingcakes.Utils;
-
-import android.content.SharedPreferences;
-import android.appwidget.AppWidgetManager;
-import android.content.Context;
-
-import java.util.List;
-import java.util.Objects;
 
 import java.util.List;
 import java.util.Objects;
@@ -88,6 +45,28 @@ public class DetailsFragment extends Fragment {
     private static Cake currentCake;
     private static byte[] byteArray;
     public static SharedPreferences recentCake;
+
+    // Define a new interface OnStepClickListener that triggers a callback in the host activity
+    public static OnStepClickListener mStepCallback;
+
+    // OnStepClickListener interface, calls a method in the host activity named onStepSelected
+    public interface OnStepClickListener {
+        void onStepSelected(int position);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This makes sure that the host activity has implemented the callback interface
+        // If not, it throws an exception
+        try {
+            mStepCallback = (OnStepClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + getString(R.string.must_implement_onstepclicklistener));
+        }
+    }
 
     public DetailsFragment() {
     }
@@ -167,7 +146,7 @@ public class DetailsFragment extends Fragment {
         return rootView;
     }
 
-    private void widgetIntent() {
+    public void widgetIntent() {
         // and let the widget know there is a new recentCake to display
         Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         ((AppCompatActivity)getActivity()).sendBroadcast(widgetIntent);
