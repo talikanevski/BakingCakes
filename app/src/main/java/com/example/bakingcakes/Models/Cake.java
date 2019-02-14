@@ -45,10 +45,6 @@ public class Cake implements Parcelable {
         }
     };
 
-    public int getCakeId() {
-        return cakeId;
-    }
-
     public String getCakeName() {
         return cakeName;
     }
@@ -65,29 +61,8 @@ public class Cake implements Parcelable {
         return cakeImage;
     }
 
-    public void setCakeId(int cakeId) {
-        this.cakeId = cakeId;
-    }
-
-    public void setCakeName(String cakeName) {
-        this.cakeName = cakeName;
-    }
-
-    public List<Ingredient> setCakeIngredients(List<Ingredient> cakeIngredients) {
-        this.cakeIngredients = cakeIngredients;
-        return cakeIngredients;
-    }
-
-    public void setSteps(List<Step> steps) {
-        this.steps = steps;
-    }
-
     public String getServings() {
         return servings;
-    }
-
-    public void setCakeImage(Bitmap cakeImage) {
-        this.cakeImage = cakeImage;
     }
 
     @Override

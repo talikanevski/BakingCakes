@@ -20,7 +20,6 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.bakingcakes.Adapters.IngredientAdapter;
@@ -79,7 +78,7 @@ public class DetailsFragment extends Fragment {
 
         //Providing Up navigation
         final Toolbar toolbar = rootView.findViewById(R.id.detail_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
         Objects.requireNonNull(((AppCompatActivity)getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         final ImageView imageView = rootView.findViewById(R.id.backdrop);
         if (savedInstanceState == null) {
@@ -118,7 +117,7 @@ public class DetailsFragment extends Fragment {
             setupRecyclerViewForSteps(stepsRecyclerView, steps);
 
         // save selected recipe details to SharedPreferences for the widget to use
-        recentCake =  getContext().getSharedPreferences(getString(R.string.pref_file_name),
+        recentCake =  Objects.requireNonNull(getContext()).getSharedPreferences(getString(R.string.pref_file_name),
                         Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = recentCake.edit();
         editor.putString(getString(R.string.cake_name_key), currentCake.getCakeName());
@@ -146,10 +145,10 @@ public class DetailsFragment extends Fragment {
         return rootView;
     }
 
-    public void widgetIntent() {
+    private void widgetIntent() {
         // and let the widget know there is a new recentCake to display
         Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        ((AppCompatActivity)getActivity()).sendBroadcast(widgetIntent);
+        Objects.requireNonNull(getActivity()).sendBroadcast(widgetIntent);
     }
 
     private void setupRecyclerViewForIngredients(@NonNull RecyclerView

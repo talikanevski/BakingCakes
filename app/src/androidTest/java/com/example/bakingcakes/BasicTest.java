@@ -28,7 +28,6 @@ import static org.hamcrest.Matchers.startsWith;
  */
 @RunWith(AndroidJUnit4.class)
 public class BasicTest {
-    public static final String CAKE_NAME = "Cheesecake";
     @Rule
     public ActivityTestRule<MainActivity> testRule = new ActivityTestRule<>(MainActivity.class);
 

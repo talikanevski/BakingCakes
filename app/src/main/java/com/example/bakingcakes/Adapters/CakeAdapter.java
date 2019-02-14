@@ -28,8 +28,7 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
     private Bitmap bitmap; // cake image NOT from the given JSON
 
     public CakeAdapter(Context context,
-                       List<Cake> cakes,
-                       boolean twoPane) {
+                       List<Cake> cakes) {
         this.cakeList = cakes;
         this.mContext = context;
     }

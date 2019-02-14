@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bakingcakes.Activities.DetailActivity;
 import com.example.bakingcakes.Fragments.DetailsFragment;
 import com.example.bakingcakes.Models.Ingredient;
 import com.example.bakingcakes.R;
@@ -21,9 +20,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     private Context mContext;
     private final List<Ingredient> ingredientList;
     public static String ingredientsForWidget = "Ingredients:";
-    public Double quantity;
-    public String newMeasure;
-    public Ingredient currentIngredient;
+    private Double quantity;
+    private String newMeasure;
+    private Ingredient currentIngredient;
 
     public IngredientAdapter(Context context,
                              List<Ingredient> ingredients) {

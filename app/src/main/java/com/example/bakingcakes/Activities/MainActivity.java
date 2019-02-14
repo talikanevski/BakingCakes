@@ -57,12 +57,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        if (findViewById(R.id.tablet_main_layout) != null) {
-            mTwoPane = true;
-
-        } else {
-            mTwoPane = false;
-        }
+        mTwoPane = findViewById(R.id.tablet_main_layout) != null;
 
         setSupportActionBar(mBinding.toolbar);
 
@@ -189,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new CakeAdapter(this, new ArrayList<Cake>(), mTwoPane));
+        recyclerView.setAdapter(new CakeAdapter(this, new ArrayList<Cake>()));
         if(mTwoPane) {// 2- how many rows in the grid view
             recyclerView.setLayoutManager
                     (new GridLayoutManager(recyclerView.getContext(), 2));
@@ -197,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void updateRecyclerView(@NonNull RecyclerView recyclerView, List<Cake> cakes) {
-        recyclerView.setAdapter(new CakeAdapter(this,  cakes, mTwoPane));
+        recyclerView.setAdapter(new CakeAdapter(this,  cakes));
         if(mTwoPane) {// 2- how many rows in the grid view
             recyclerView.setLayoutManager
                     (new GridLayoutManager(recyclerView.getContext(), 2));

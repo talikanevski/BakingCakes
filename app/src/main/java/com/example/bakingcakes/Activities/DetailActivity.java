@@ -3,12 +3,10 @@ package com.example.bakingcakes.Activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.RelativeLayout;
 
 import com.example.bakingcakes.Fragments.DetailsFragment;
 import com.example.bakingcakes.Fragments.StepFragment;
@@ -25,7 +23,6 @@ public class DetailActivity extends AppCompatActivity implements DetailsFragment
     public static final String CURRENT_CAKE = "current cake";
     public static final String IMAGE = "image";
     public static Cake currentCake;
-    private static byte[] byteArray;
     public static SharedPreferences recentCake;
     private ActivityDetailBinding binding;
     private boolean mTwoPane;
@@ -37,12 +34,8 @@ public class DetailActivity extends AppCompatActivity implements DetailsFragment
 
         Intent intent = getIntent();
         currentCake = Objects.requireNonNull(intent.getExtras()).getParcelable(CURRENT_CAKE);
-        byteArray = getIntent().getByteArrayExtra(IMAGE);
-        if (findViewById(R.id.tablet_details_fragment) != null) {
-            mTwoPane = true;
-        } else {
-            mTwoPane = false;
-        }
+        byte[] byteArray = getIntent().getByteArrayExtra(IMAGE);
+        mTwoPane = findViewById(R.id.tablet_details_fragment) != null;
 
         setContentView(R.layout.activity_detail);
 
@@ -76,14 +69,14 @@ public class DetailActivity extends AppCompatActivity implements DetailsFragment
         if (mTwoPane) {
             StepFragment stepFragment =
                     (StepFragment) getSupportFragmentManager().findFragmentById(R.id.tablet_details_fragment);
-            stepFragment.setUp(position);
+            Objects.requireNonNull(stepFragment).setUp(position);
         }
     }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(CURRENT_CAKE, currentCake);
-        outState.putByteArray(IMAGE, byteArray);
-        super.onSaveInstanceState(outState);
-    }
+//
+//    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState) {
+//        outState.putParcelable(CURRENT_CAKE, currentCake);
+//        outState.putByteArray(IMAGE, byteArray);
+//        super.onSaveInstanceState(outState);
+//    }
 }
