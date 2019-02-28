@@ -1,7 +1,7 @@
 # BakingCakes
 Android Developer Nanodegree 4th project.
 My task was to create a Android Baking App that will allow Udacity’s resident baker-in-chief, Miriam, to share her recipes with the world.
-The app allows a user to select a recipe and see video-guided steps for how to complete it. The app uses MediaPlayer/Exoplayer
+The app allows a user to select a recipe and see video-guided steps for how to complete it. The app uses Exoplayer
 to display videos from provided network resource, handle error cases, has a homescreen widget, which  displays ingredient list for desired recipe,
 leverages a third-party library, allows navigation between individual recipes and recipe steps, 
 uses RecyclerView and can handle recipe steps that include videos or images, makes use of Espresso to test aspects of the UI.
